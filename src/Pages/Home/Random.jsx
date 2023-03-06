@@ -7,11 +7,19 @@ const Random = () => {
   console.log(random);
 
   return (
-    <>{random.length > 2 ? <RandomStyled>
-        {random.slice(3).map((item, i) => (
-            <p>{item.title}</p>
-        ))}
-    </RandomStyled> : <p>Loading</p>}</>
+    <>
+      {random.length > 2 ? (
+        <RandomStyled>
+          {random.slice(3).map((item, i) => (
+            <article key={i}>
+                <h2>{item.title}</h2>
+            </article>
+          ))}
+        </RandomStyled>
+      ) : (
+        <p>Loading</p>
+      )}
+    </>
   );
 };
 

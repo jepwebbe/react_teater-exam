@@ -21,22 +21,22 @@ export const Nav = () => {
       <ul style={{ display: burgermenu ? "flex" : "none" }}>
         <li>
           <NavLink to="/" onClick={showBurgermenu}>
-            Home
+            FORSIDE
           </NavLink>
         </li>
         <li>
-          <NavLink to="/products" onClick={showBurgermenu}>
-            Products
+          <NavLink to="/events" onClick={showBurgermenu}>
+            FORESTILLINGER & EVENTS
           </NavLink>
         </li>
         <li>
-          <NavLink to="/about" onClick={showBurgermenu}>
-            About
+          <NavLink to="/actors" onClick={showBurgermenu}>
+            SKUESPILLERE
           </NavLink>
         </li>
         <li>
           <NavLink to="/contact" onClick={showBurgermenu}>
-            Contact
+            LOGIN
           </NavLink>
         </li>
       </ul>

@@ -1,11 +1,7 @@
 import styled from "styled-components";
 
 export const NavStyled = styled.nav`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 4rem;
-  background-color: white;
+
   button {
     display: none;
   }

@@ -1,19 +1,19 @@
 import React from "react";
-import { PageTwo } from "../Styles/PageTemplate/PageTwo";
-import { ProductsStyled } from "./Products.Styled";
+import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
+import { EventsStyled } from "./Events.Styled";
 
-export const Products = () => {
+export const Events = () => {
   const pageTitle = "Dette er din produktside";
   return (
     <PageTwo title={pageTitle} description="beskrivelse">
-      <ProductsStyled>
+      <EventsStyled>
         <div>
           <h1>{pageTitle}</h1>
         </div>
         <div>b</div>
         <div>c</div>
         <div>d</div>
-      </ProductsStyled>
+      </EventsStyled>
     </PageTwo>
   );
 };

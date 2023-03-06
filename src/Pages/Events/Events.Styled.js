@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ProductsStyled = styled.section`
+export const EventsStyled = styled.section`
 >div:nth-child(1) {
     grid-area: a;
     border: 1px solid black;

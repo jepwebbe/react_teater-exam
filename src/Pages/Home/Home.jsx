@@ -1,5 +1,6 @@
 import React from "react";
 import { Page } from "../../Styles/PageTemplate/Page";
+import Hero from "./Hero";
 import { HomeStyled } from "./Home.Styled";
 
 const Home = () => {
@@ -7,7 +8,7 @@ const Home = () => {
   return (
     <Page title={pageTitle} description="Dette er hjem">
       <HomeStyled>
-        <div>a <h1>{pageTitle}</h1></div>
+        <div><Hero /></div>
         <div>b</div>
         <div>c</div>
 

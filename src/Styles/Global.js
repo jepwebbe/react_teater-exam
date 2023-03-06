@@ -47,8 +47,9 @@ li {
 a {
     text-decoration: none;
 }
-h1 {
+h1, h2 {
     font-family: "Playfair";
+    font-weight: 100;
 }
 @media (max-width: ${(props) => props.theme.breakpoints.m}) {
     html {

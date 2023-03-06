@@ -5,6 +5,7 @@ export const Theme = {
     secondary: "#AD7A51",
     tertiary: "#30454C",
     theGrey: "#999999",
+    theLightGrey: "#707070",
     theGreen: "#61E692",
   },
   breakpoints: {

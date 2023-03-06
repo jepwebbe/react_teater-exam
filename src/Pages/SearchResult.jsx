@@ -6,7 +6,6 @@ const SearchResult = () => {
   console.log("søge", searchResults)
   return (
     <div>
-      {" "}
       {searchResults?.length > 0 ? (
         searchResults.map((item, i) => (
           <article key={i}>

@@ -8,11 +8,14 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { setSearchResults } = useSearchResultsStore()
   const navigate = useNavigate();
-
+ 
+  // function that holds the search string
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // a simple fetch that takes the searchterm and fetches it
+  // and navigates to result page
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -21,11 +24,10 @@ const Search = () => {
       );
       const results = await response.json();
       setSearchResults(results.items);
-      console.log("søge", results.items)
     } catch (error) {
       console.error(error);
     }
-    navigate("/search")
+    navigate("/resultat")
   };
 
   return (

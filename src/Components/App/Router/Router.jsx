@@ -6,6 +6,7 @@ import { Events } from "../../../Pages/Events/Events";
 import EventsDetails from "../../../Pages/Events/EventsDetails";
 import Home from "../../../Pages/Home/Home";
 import { NotFound } from "../../../Pages/NotFound";
+import SearchResult from "../../../Pages/SearchResult";
 // Defines the routes via the react-router-dom routing
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Route path="/events/:id" element={<EventsDetails />} />
       <Route path="/skuespillere" element={<Actors />} />
       <Route path="/skuespillere/:id" element={<ActorsDetails />} />
+      <Route path="/resultat" element={<SearchResult />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

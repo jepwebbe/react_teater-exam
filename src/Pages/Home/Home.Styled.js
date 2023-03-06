@@ -10,11 +10,4 @@ export const HomeStyled = styled.section`
 >div:nth-child(3) {
     grid-area: c;
 }
->div:nth-child(4) {
-    grid-area: d;
-}
->div:nth-child(5) {
-    grid-area: e;
-
-}
 `

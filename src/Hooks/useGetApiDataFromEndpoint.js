@@ -8,7 +8,7 @@ const useGetApiDataFromEndpoint = (endpoint, key) => {
   useEffect(() => {
     // it uses async to let other code run while the api request is completed
     const renderData = async () => {
-      try {
+      try { 
         const response = await appService.Get(endpoint);
         // if there is a response, it sets it to state or else returns an error
         if (response.data) {

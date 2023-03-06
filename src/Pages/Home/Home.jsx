@@ -2,6 +2,7 @@ import React from "react";
 import { Page } from "../../Styles/PageTemplate/Page";
 import Hero from "./Hero";
 import { HomeStyled } from "./Home.Styled";
+import Random from "./Random";
 
 const Home = () => {
   const pageTitle = "Dette er din forside"
@@ -9,7 +10,7 @@ const Home = () => {
     <Page title={pageTitle} description="Dette er hjem">
       <HomeStyled>
         <div><Hero /></div>
-        <div>b</div>
+        <div><Random /></div>
         <div>c</div>
 
       </HomeStyled>

@@ -4,7 +4,8 @@ export const Theme = {
     primary: "#D39D5B",
     secondary: "#AD7A51",
     tertiary: "#30454C",
-    theGrey: "#999999"
+    theGrey: "#999999",
+    theGreen: "#61E692",
   },
   breakpoints: {
     xs: "320px",

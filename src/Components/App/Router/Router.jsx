@@ -15,7 +15,6 @@ const Router = () => {
       <Route path="/events/:id" element={<EventsDetails />} />
       <Route path="/skuespillere" element={<Actors />} />
       <Route path="/skuespillere/:id" element={<ActorsDetails />} />
-
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

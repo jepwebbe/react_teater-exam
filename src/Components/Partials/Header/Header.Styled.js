@@ -7,6 +7,9 @@ export const HeaderStyled = styled.header`
   background-color: white;
   display: flex;
   justify-content: space-between;
+  a img {
+    height: 100%;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.m}) {
 
 

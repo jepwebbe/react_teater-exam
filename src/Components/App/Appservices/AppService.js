@@ -2,7 +2,7 @@ import axios from "axios";
 import API_URL from "./API_URL";
 import authHeader from "./auth-header";
 // This file holds a series of functions containing axios functions to interact with the API
-const BASEURL = "stringsonline";
+const BASEURL = "detutroligeteater";
 
 const GetList = (e) => {
   return axios.get(`${API_URL}/${BASEURL}/${e}`, {

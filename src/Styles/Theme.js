@@ -1,7 +1,10 @@
 // The theme object holding values that can be accessed globally by styled-components
 export const Theme = {
   colors: {
-    primaryBg: "beige",
+    primary: "#D39D5B",
+    secondary: "#AD7A51",
+    tertiary: "#30454C",
+    theGrey: "#999999"
   },
   breakpoints: {
     xs: "320px",

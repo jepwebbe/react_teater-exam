@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const StyledGrid = styled.main`
   padding: 0 1rem;
   grid-area: main;
-  background-color: ${(props) => props.theme.colors.primaryBg};
   height: 100%;
   > :first-child {
     height: 100%;

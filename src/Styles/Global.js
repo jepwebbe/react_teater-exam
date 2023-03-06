@@ -1,6 +1,18 @@
 import { createGlobalStyle } from "styled-components";
+import Titilium from "../assets/fonts/TitilliumWebRegular.ttf"
+import Playfair from "../assets/fonts/PlayfairDisplayVariableFont.ttf"
 // GlobalStyles for the styled-components that add the standard values site-wide
 export const GlobalStyles = createGlobalStyle`
+@font-face {
+    font-family: "Titilium";
+    src: local("Titilium"),
+    url(${Titilium}) format('truetype');
+}
+@font-face {
+    font-family: "Playfair";
+    src: local("Playfair"),
+    url(${Playfair}) format('truetype');
+}
 * {
     box-sizing: border-box;
 }
@@ -13,6 +25,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    font-family: "Titilium";
 }
 #root {
     height: 100%;
@@ -31,6 +44,9 @@ li {
 }
 a {
     text-decoration: none;
+}
+h1 {
+    font-family: "Playfair";
 }
 @media (max-width: ${(props) => props.theme.breakpoints.m}) {
     html {

@@ -11,8 +11,7 @@ export const Events = () => {
           <h1>{pageTitle}</h1>
         </div>
         <div>b</div>
-        <div>c</div>
-        <div>d</div>
+
       </EventsStyled>
     </PageTwo>
   );

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderStyled = styled.header`
   grid-area: header;
-  width: 100vw;
+  width: 100%;
   height: 5rem;
   background-color: white;
   display: flex;

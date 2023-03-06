@@ -29,6 +29,8 @@ body {
 }
 #root {
     height: 100%;
+    width: 80vw;
+    margin: 0 auto;
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-columns: repeat(2, 1fr);

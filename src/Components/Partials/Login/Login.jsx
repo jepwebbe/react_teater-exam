@@ -1,18 +1,21 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
 import { useLoginStore } from "./useLoginStore";
 import { useNavigate } from "react-router-dom";
-import appService from "../../Components/App/Appservices/AppService";
+import appService from "../../App/Appservices/AppService";
 
-const Login = (forward) => {
+const Login = ({ forward }) => {
   // saves useNavigate in a variable to use after login
   const navigate = useNavigate();
   // destructures the custom hook to variables (and a function)
   const { setLoggedIn, loggedIn, username } = useLoginStore();
 
   // destructures the useForm
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   // function that manages the login request, takes the submitdata from the form as parameter
   const onSubmit = (submitdata) => {
     // async function using the appService to make a login request,
@@ -35,7 +38,9 @@ const Login = (forward) => {
       } catch (error) {
         console.error(error);
       }
-      navigate(forward);
+      if (forward) {
+        navigate("/minside");
+      }
     };
     fetchResult();
   };
@@ -45,7 +50,7 @@ const Login = (forward) => {
     navigate("/");
   };
   return (
-    <> 
+    <>
       {!loggedIn ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -55,21 +60,24 @@ const Login = (forward) => {
             placeholder="brugernavn"
           />
           {errors.username && errors.username.type === "required" && (
-            <span>Dette felt skal udfyldes</span>
+            <span>Udfyld venligst dit brugernavn</span>
           )}
-          <input
-            {...register("password", { required: true })}
-            type="password"
-            autoComplete="password"
-            placeholder="kodeord"
-          />
-          <button>Login</button>
+
+          <div>
+            <input
+              {...register("password", { required: true })}
+              type="password"
+              autoComplete="password"
+              placeholder="kodeord"
+            />
+            <button>LOGIN</button>
+          </div>
         </form>
       ) : (
-        <aside>
-          <p>Du er logget ind som {username}</p>
+        <>
+          <h3>{username} er logget in</h3>
           <button onClick={() => handleLogout()}>Log ud</button>
-        </aside>
+        </>
       )}
     </>
   );

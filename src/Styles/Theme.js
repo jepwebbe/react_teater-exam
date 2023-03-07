@@ -49,10 +49,10 @@ export const Theme = {
   },
   tabletTwo: {
   rows: "auto 1fr ",
-  columns: "repeat(2, auto)",
+  columns: "1fr",
   area: `
-    "a a"
-    "b b"
+    "a"
+    "b"
 
             `,
   },
@@ -68,10 +68,10 @@ export const Theme = {
   },
   mobileTwo: {
     rows: "auto 1fr",
-    columns: "repeat(2, auto)",
+    columns: "1fr",
     area: `
-      "a a"
-      "b b"
+      "a"
+      "b"
               `,
     },
 };

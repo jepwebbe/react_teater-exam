@@ -5,14 +5,12 @@ import { Link, useParams } from "react-router-dom";
 import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
 import DateRange from "../../Components/Partials/DateFormatter";
-import { useLoginStore } from "../../Components/Partials/Header/Login/useLoginStore";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
-import Login from "../Login/Login";
 import { EventsDetailsStyled } from "./EventsDetails.Styled";
+import AddReview from "./Review/AddReview";
 
 const EventsDetails = () => {
   // Destructuring of hooks
-  const { loggedIn } = useLoginStore();
   const { id } = useParams();
 
   // Setting up variables and setter functions for useState
@@ -45,7 +43,7 @@ const EventsDetails = () => {
   }, [id]);
   return (
     <PageTwo
-      title={`${eventDetails?.title} hos Det Utrolige Teater`}
+      title={`Forestillingen ${eventDetails && eventDetails?.title} hos Det Utrolige Teater`}
       description={`Se meget mere information om spilletider, book og pris om ${eventDetails?.title}`}
     >
       <EventsDetailsStyled>
@@ -103,7 +101,7 @@ const EventsDetails = () => {
                   </li>
                 </ul>
               ))}
-              {loggedIn ? <form>pøls</form> : <Login />}
+              <AddReview eventId={eventDetails.item.id}/>
             </div>
           </>
         ) : (

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrClose } from "react-icons/gr";
 import { NavStyled } from "./Nav.Styled";
 import Search from "./Search/Search";
-import Login from "./Login/Login";
-import { useLoginStore } from "./Login/useLoginStore";
+import Login from "../Login/Login";
+import { useLoginStore } from "../Login/useLoginStore";
 
 export const Nav = () => {
   // Set the burgermenu to true, if window width is larger than 768
-  const burgerWidth = "768"
+  const burgerWidth = "768";
   // useState to toggle visibility of burgermenu and loginmenu
   const [burgermenu, setBurgermenu] = useState(false);
   const [loginMenu, setLoginMenu] = useState(false);
@@ -26,24 +26,45 @@ export const Nav = () => {
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-  
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Change the value of the burgermenu state to the opposite, if window width..
   const showBurgermenu = () => {
-    if (window.innerWidth <= burgerWidth) { 
-    setBurgermenu(!burgermenu)};
+    if (window.innerWidth <= burgerWidth) {
+      setBurgermenu(!burgermenu);
+    }
   };
   const showLogin = () => {
-    setLoginMenu(!loginMenu)
-  }
+    setLoginMenu(!loginMenu);
+  };
+  useEffect(() => {
+    const closeLoginMenu = () => {
+      setLoginMenu(false);
+    };
+    const handleClick = (e) => {
+      // Check if the click event was in the login-menu
+      if (e.target.closest(".login-menu")) {
+        return;
+      }
+
+      // If it was not close the menu
+      closeLoginMenu();
+    };
+    document.addEventListener("click", handleClick);
+
+    // Remove event listener on cleanup
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
   return (
     <NavStyled>
       <button className="burger" onClick={showBurgermenu}>
         {!burgermenu ? <GiHamburgerMenu /> : <GrClose />}
       </button>
-      <Search style={{ display: burgermenu ? "grid" : "none" }}/>
+      <Search style={{ display: burgermenu ? "grid" : "none" }} />
       <ul style={{ display: burgermenu ? "flex" : "none" }}>
         <li>
           <NavLink to="/" onClick={showBurgermenu}>
@@ -60,11 +81,15 @@ export const Nav = () => {
             SKUESPILLERE
           </NavLink>
         </li>
-        <li>
-            {!loggedIn ? <p onClick={showLogin}>LOGIN</p> : <p onClick={showLogin}>LOG UD</p>}
-            <div style={{ display: loginMenu ? "block" : "none" }}>
-              <Login />
-            </div>
+        <li className="login-menu">
+          {!loggedIn ? (
+            <p onClick={showLogin}>LOGIN</p>
+          ) : (
+            <Link to="/minside">MIN SIDE</Link>
+          )}
+          <div style={{ display: loginMenu ? "block" : "none" }}>
+            <Login forward={true} />
+          </div>
         </li>
       </ul>
     </NavStyled>

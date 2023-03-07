@@ -73,6 +73,9 @@ export const NavStyled = styled.nav`
       }
     }
   }
+  h3 {
+    color: white;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.m}) {
     display: grid;
     button.burger {

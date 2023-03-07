@@ -14,6 +14,7 @@ export const Theme = {
     im: "600px",
     m: "768px",
     l: "992px",
+    il: "1100px",
     xl: "1200px",
   },
   desktop: {

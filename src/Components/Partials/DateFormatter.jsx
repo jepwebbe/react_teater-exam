@@ -20,7 +20,7 @@ const DateRange = ({ dateRange }) => {
     -6
   )} - ${endFormatted.slice(0, -6)} ${endDate.getFullYear()}`;
 
-  return <p>{formattedDateRange}</p>;
+  return <p>{formattedDateRange.toUpperCase()}</p>;
 };
 
 export default DateRange;

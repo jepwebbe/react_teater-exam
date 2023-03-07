@@ -47,11 +47,14 @@ li {
 a {
     text-decoration: none;
 }
+button {
+    font-family: "Titilium";
+}
 h1, h2 {
     font-family: "Playfair";
     font-weight: 100;
 }
-@media (max-width: ${(props) => props.theme.breakpoints.m}) {
+@media (max-width: ${(props) => props.theme.breakpoints.l}) {
     html {
         font-size: 12px;
     }

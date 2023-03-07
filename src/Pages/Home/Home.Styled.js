@@ -1,13 +1,10 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const HomeStyled = styled.section`
->div:nth-child(1) {
+  > article {
     grid-area: a;
-}
->div:nth-child(2) {
+  }
+  > div {
     grid-area: b;
-}
->div:nth-child(3) {
-    grid-area: c;
-}
-`
+  }
+`;

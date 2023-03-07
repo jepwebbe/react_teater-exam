@@ -6,7 +6,7 @@ import { HeroStyled } from "./Hero.Styled";
 
 const Hero = () => {
   const { state: hero } = useGetByIdApiDataFromEndpoint("events", 1);
-  console.log("hero");
+
   if (hero.item) {
     const dateRange = hero.item.startdate + " - " + hero.item.stopdate;
     return (

@@ -7,6 +7,7 @@ export const HeaderStyled = styled.header`
   background-color: white;
   display: flex;
   justify-content: space-between;
+  margin: 1rem 0;
   a img {
     height: 100%;
   }

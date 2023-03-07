@@ -9,10 +9,8 @@ const Home = () => {
   return (
     <Page title={pageTitle} description="Dette er hjem">
       <HomeStyled>
-        <div><Hero /></div>
-        <div><Random /></div>
-        <div>c</div>
-
+        <Hero />
+        <Random />
       </HomeStyled>
     </Page>
   );

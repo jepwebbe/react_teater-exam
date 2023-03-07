@@ -1,5 +1,7 @@
 import React from "react";
+import Hero from "../../Components/Partials/Hero";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
+import EventList from "./EventList";
 import { EventsStyled } from "./Events.Styled";
 
 export const Events = () => {
@@ -7,11 +9,8 @@ export const Events = () => {
   return (
     <PageTwo title={pageTitle} description="beskrivelse">
       <EventsStyled>
-        <div>
-          <h1>{pageTitle}</h1>
-        </div>
-        <div>b</div>
-
+        <Hero />
+        <EventList />
       </EventsStyled>
     </PageTwo>
   );

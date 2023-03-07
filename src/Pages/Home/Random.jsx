@@ -3,6 +3,7 @@ import DateRange from "../../Components/Partials/DateFormatter";
 import CTAButton from "../../Components/Partials/CTAButton";
 import useGetApiDataFromEndpoint from "../../Hooks/useGetApiDataFromEndpoint";
 import { RandomStyled } from "./Random.Styled";
+import { Link } from "react-router-dom";
 
 const Random = () => {
   const { state: random } = useGetApiDataFromEndpoint("events", "items");
@@ -25,17 +26,23 @@ const Random = () => {
                 <DateRange dateRange={item.startdate + " - " + item.stopdate} />
                 <h2>{item.title}</h2>
                 <p>{item.genre.toUpperCase()}</p>
-                <CTAButton href={`/events/${item.id}`} width="1rem" bgColor={props => props.theme.colors.tertiary} btnText="LÆS MERE"/>
-                <CTAButton href="/" width="1rem" bgColor={props => props.theme.colors.primary} btnText="KØB BILLET"/>
+                <Link to={`/events/${item.id}`} >
+                  <CTAButton width="1rem" bgColor={props => props.theme.colors.tertiary} btnText="LÆS MERE"/>
+                </Link>
+                <Link to="/">
+                  <CTAButton width="1rem" bgColor={props => props.theme.colors.primary} btnText="KØB BILLET"/>
+                </Link>
             </article>
           ))}
           </div>
           <div>
-              <CTAButton href="/events" width="3rem" btnText="SE ALLE FORESTILLINGER" bgColor={props => props.theme.colors.secondary} />
+              <Link to="/events">
+                <CTAButton width="3rem" btnText="SE ALLE FORESTILLINGER" bgColor={props => props.theme.colors.secondary} />
+              </Link>
           </div>
         </RandomStyled>
       ) : (
-        <p>Loading</p>
+        <p>Indlæser</p>
       )}
     </>
   );

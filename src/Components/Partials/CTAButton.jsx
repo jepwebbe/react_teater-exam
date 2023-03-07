@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-const CTAButton = ({ bgColor, btnText, href, width }) => {
+const CTAButton = ({ bgColor, btnText, width }) => {
   return (
-    <ButtonStyled width={width} href={href} bgColor={bgColor}>
+    <ButtonStyled width={width} bgColor={bgColor}>
       {btnText}
     </ButtonStyled>
   );
 };
-const ButtonStyled = styled.a`
+const ButtonStyled = styled.span`
   display: inline-block;
   padding: 0.5rem ${(props) => props.width};
   background-color: ${(props) => props.bgColor};

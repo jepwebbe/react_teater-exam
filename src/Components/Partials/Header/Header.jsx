@@ -7,7 +7,7 @@ export const Header = () => {
 
   return (
     <HeaderStyled>
-      <a href="/"><img src={logo} alt="Det Utrolige Teaters logo med en teatersmiley" /></a>
+      <a href="/"><h1><img src={logo} alt="Det Utrolige Teaters logo med en teatersmiley" /></h1></a>
       <Nav />
     </HeaderStyled>
   );

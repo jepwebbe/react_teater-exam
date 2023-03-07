@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DateRange from "../../Components/Partials/DateFormatter";
+import DateRange from "./DateFormatter";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { HeroStyled } from "./Hero.Styled";
 

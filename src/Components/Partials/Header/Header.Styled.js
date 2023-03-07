@@ -8,11 +8,12 @@ export const HeaderStyled = styled.header`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
-  a img {
+  a h1 {
     height: 100%;
+    img {
+      height: 100%;
+    }
   }
   @media (max-width: ${(props) => props.theme.breakpoints.m}) {
-
-
   }
 `;

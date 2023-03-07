@@ -11,7 +11,6 @@ export const Nav = () => {
   const burgerWidth = "768"
   const [burgermenu, setBurgermenu] = useState(false);
   const [loginMenu, setLoginMenu] = useState(false);
-  console.log(loginMenu)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= burgerWidth) {

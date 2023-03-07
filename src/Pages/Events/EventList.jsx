@@ -10,6 +10,8 @@ import { EventsListedStyled } from "../../Styles/EventsListedStyled";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
+  const [sortMe, setSortMe] = useState("");
+
   console.log("events", events);
   // fetch the house from the id in the url using useParams
   // and sets result to state variable
@@ -24,16 +26,41 @@ const EventList = () => {
     };
     getData();
   }, []);
+
+// function that handles the selected sort
+  const handleSortChange = (e) => {
+    setSortMe(e.target.value);
+  };
+
+  // Sorting the events based on the select parameter
+  const sortedEvents = events.sort((a, b) => {
+    if (sortMe === "priceAsc") {
+      return a.price - b.price;
+    } else if (sortMe === "priceDesc") {
+      return b.price - a.price;
+    } else if (sortMe === "nameAsc") {
+      return a.title.localeCompare(b.title);
+    } else if (sortMe === "nameDesc") {
+      return b.title.localeCompare(a.title);
+    } else {
+      return 0;
+    }
+  });
+  
   return (
     <EventListStyled>
       <div>
-        <select>
-          <option value="">Filter</option>
-        </select>
+      <select value={sortMe} onChange={handleSortChange}>
+        <option value="">Filter</option>
+        <option value="priceDesc">Sorter efter pris (faldende)</option>
+        <option value="priceAsc">Sorter efter pris (stigende)</option>
+        <option value="nameAsc">Sorter efter titel (A - Å)</option>
+        <option value="nameDesc">Sorter efter titel (Å - A)</option>
+      </select>
         <h2>Oversigt</h2>
       </div>
       {events.length > 0 ? (
-        events.map((item, i) => (
+        sortedEvents.map((item, i) => (
           <EventsListedStyled key={i}>
             <li>
               <div>

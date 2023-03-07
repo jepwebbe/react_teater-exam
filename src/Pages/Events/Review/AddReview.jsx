@@ -6,9 +6,9 @@ import { StyledAddReview } from "./AddReview.Styled";
 import { BsCardText } from "react-icons/bs";
 import Login from "../../../Components/Partials/Login/Login";
 
-const AddReview = ({ eventId }) => {
+const AddReview = ({ eventId, setReviewSent }) => {
   const { loggedIn, userInfo } = useLoginStore();
-  const [reviewSent, setReviewSent] = useState(false);
+  const [reviewSent, setLocalReviewSent] = useState(false);
 
   // Destructure form methods from useForm
   const {
@@ -32,6 +32,7 @@ const AddReview = ({ eventId }) => {
       const response = await appService.Create("reviews", postData);
       if (response.status) {
         reset();
+        setLocalReviewSent(true);
         setReviewSent(true);
       }
     } catch (error) {
@@ -91,7 +92,7 @@ const AddReview = ({ eventId }) => {
         ) : (
           <div className="user-message">
             <p>Du skal være logget ind for at skrive en anmeldelse</p>
-            <Login forwaord={true}/>
+            <Login forward={false}/>
           </div>
         )}
       </StyledAddReview>

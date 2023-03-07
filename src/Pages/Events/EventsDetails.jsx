@@ -17,10 +17,12 @@ const EventsDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
   const [reviews, setReviews] = useState([]);
 
+  const [reviewSent, setReviewSent] = useState(false);
+
   console.log("reviews", reviews);
 
   // fetch the event from the id in the url using useParams
-  // and sets result to state variable
+  // and sets result to state variables
   useEffect(() => {
     const getData = async () => {
       try {
@@ -34,16 +36,18 @@ const EventsDetails = () => {
     const getReviews = async () => {
       try {
         const result = await appService.Get(`reviews?event_id=${id}`);
-        setReviews(result.data.items)
+        setReviews(result.data.items);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     };
     getReviews();
-  }, [id]);
+  }, [id, reviewSent]);
   return (
     <PageTwo
-      title={`Forestillingen ${eventDetails && eventDetails?.title} hos Det Utrolige Teater`}
+      title={`Forestillingen ${
+        eventDetails && eventDetails?.title
+      } hos Det Utrolige Teater`}
       description={`Se meget mere information om spilletider, book og pris om ${eventDetails?.title}`}
     >
       <EventsDetailsStyled>
@@ -64,7 +68,7 @@ const EventsDetails = () => {
                   }
                 />
               </div>
-              <p>Billetpris: {eventDetails.item.price}</p>
+              <p>BILLETPRIS: {eventDetails.item.price} DKK</p>
             </div>
             <div>
               <h2>{eventDetails.item.title}</h2>
@@ -75,34 +79,42 @@ const EventsDetails = () => {
               />
             </div>
             <div>
-              <p>{eventDetails.item.genre}</p>
-              <p>{eventDetails.item.description}</p>
+              <p>{eventDetails.item.genre.toUpperCase()}</p>
+              <pre>{eventDetails.item.description}</pre>
             </div>
             <div>
               <h3>MEDVIRKENDE</h3>
-              {eventDetails.item.actors.map((actor, i) => (
-                <ul key={i}>
+              <ul>
+                {eventDetails.item.actors.map((actor, i) => (
                   <Link to={`/skuespillere/${actor.id}`}>
-                    <li><img src={actor.image} alt={`Et billede af skuespilleren ${actor.name}`} /></li>
-                    <h4>{actor.name}</h4>
+                    <li key={i}>
+                      <img
+                        src={actor.image}
+                        alt={`Et billede af skuespilleren ${actor.name}`}
+                      />
+                      <h4>{actor.name}</h4>
+                    </li>
                   </Link>
-                </ul>
-              ))}
+                ))}
+              </ul>
             </div>
             <div>
               <h3>ANMELDELSER</h3>
-              {reviews?.map((review, ix) => (
-                <ul key={ix}>
-                  <li>
-                    <div>{review.num_stars}</div>
+              <ul>
+                {reviews?.map((review, ix) => (
+                  <li key={ix}>
+                    <div>Antal stjerner {review.num_stars}</div>
                     <p>{review.created}</p>
-                    <p>{review.user.firstname} {review.user.lastname}</p>
+                    <p>
+                      {review.user.firstname.toUpperCase()} {review.user.lastname.toUpperCase()}
+                    </p>
                     <p>{review.comment}</p>
                   </li>
-                </ul>
-              ))}
-              <AddReview eventId={eventDetails.item.id}/>
+                ))}
+              </ul>
+            
             </div>
+            <AddReview eventId={eventDetails.item.id} setReviewSent={setReviewSent}/>
           </>
         ) : (
           <p>Indlæser</p>

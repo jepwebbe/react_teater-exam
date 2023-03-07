@@ -7,6 +7,7 @@ grid-template-columns: 1fr 1fr 1fr 1.8fr;
 background-color: ${(props) => props.theme.colors.tertiary};
 color: white;
 font-size: 0.75rem;
+margin-top: 5rem;
 div {
     padding: 2rem;
     ul {

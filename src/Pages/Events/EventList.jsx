@@ -6,6 +6,7 @@ import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
 import DateRange from "../../Components/Partials/DateFormatter";
 import { EventListStyled } from "./EventListStyled";
+import { EventsListedStyled } from "../../Styles/EventsListedStyled";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -33,7 +34,7 @@ const EventList = () => {
       </div>
       {events.length > 0 ? (
         events.map((item, i) => (
-          <ul key={i}>
+          <EventsListedStyled key={i}>
             <li>
               <div>
                 <img
@@ -64,7 +65,7 @@ const EventList = () => {
                 </Link>
               </div>
             </li>
-          </ul>
+          </EventsListedStyled>
         ))
       ) : (
         <p>Indlæser</p>

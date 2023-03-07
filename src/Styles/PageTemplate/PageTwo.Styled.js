@@ -6,6 +6,7 @@ export const StyledGrid = styled.main`
   padding: 0 1rem;
   >:first-child {
     height: 100%;
+    width: 100%;
     display: grid;
     gap: 1rem;
     background-color: ${(props) => props.theme.colors.primaryBg};

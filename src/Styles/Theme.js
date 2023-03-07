@@ -28,8 +28,8 @@ export const Theme = {
   },
   desktopTwo: {
     rows: "auto 1fr",
-    columns: "4fr 1fr",
-    area: `"a a" "b b" "c c"
+    columns: "1fr",
+    area: `"a" "b"
               `,
   },
   desktopThree: {

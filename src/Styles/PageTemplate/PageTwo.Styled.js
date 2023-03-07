@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const StyledGrid = styled.main`
   grid-area: main;
   height: 100%;
-  padding: 0 1rem;
   >:first-child {
     height: 100%;
     width: 100%;

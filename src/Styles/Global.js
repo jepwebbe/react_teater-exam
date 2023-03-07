@@ -54,6 +54,9 @@ h1, h2, h3 {
     font-family: "Playfair";
     font-weight: 100;
 }
+h1 {
+    margin: 0;
+}
 @media (max-width: ${(props) => props.theme.breakpoints.l}) {
     html {
         font-size: 12px;

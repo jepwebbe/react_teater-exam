@@ -19,6 +19,7 @@ export const NavStyled = styled.nav`
     li:last-of-type {
       padding-right: 2rem;
       position: relative;
+      cursor: pointer;
       p {
         margin: 0;
       }

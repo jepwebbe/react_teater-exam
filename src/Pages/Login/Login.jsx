@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useLoginStore } from "./useLoginStore";
 import { useNavigate } from "react-router-dom";
-import appService from "../../../Components/App/Appservices/AppService";
+import appService from "../../Components/App/Appservices/AppService";
 
 const Login = (forward) => {
   // saves useNavigate in a variable to use after login
@@ -45,7 +45,7 @@ const Login = (forward) => {
     navigate("/");
   };
   return (
-    <>
+    <> 
       {!loggedIn ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <input

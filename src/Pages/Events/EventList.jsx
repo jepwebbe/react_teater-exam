@@ -27,14 +27,17 @@ const EventList = () => {
     getData();
   }, []);
 
-// function that handles the selected sort
+  // function that handles the selected sort
   const handleSortChange = (e) => {
     setSortMe(e.target.value);
   };
 
   // Sorting the events based on the select parameter
+  // localCompare compares strings based on the locale of the user
   const sortedEvents = events.sort((a, b) => {
-    if (sortMe === "priceAsc") {
+    if (sortMe === "popularity") {
+      return a.startdate.localeCompare(b.startdate);
+    } else if (sortMe === "priceAsc") {
       return a.price - b.price;
     } else if (sortMe === "priceDesc") {
       return b.price - a.price;
@@ -46,17 +49,18 @@ const EventList = () => {
       return 0;
     }
   });
-  
+
   return (
     <EventListStyled>
       <div>
-      <select value={sortMe} onChange={handleSortChange}>
-        <option value="">Filter</option>
-        <option value="priceDesc">Sorter efter pris (faldende)</option>
-        <option value="priceAsc">Sorter efter pris (stigende)</option>
-        <option value="nameAsc">Sorter efter titel (A - Å)</option>
-        <option value="nameDesc">Sorter efter titel (Å - A)</option>
-      </select>
+        <select value={sortMe} onChange={handleSortChange}>
+          <option value="">Filter</option>
+          <option value="popularity">Sorter efter popularitet(tid)</option>
+          <option value="priceDesc">Sorter efter pris (faldende)</option>
+          <option value="priceAsc">Sorter efter pris (stigende)</option>
+          <option value="nameAsc">Sorter efter titel (A - Å)</option>
+          <option value="nameDesc">Sorter efter titel (Å - A)</option>
+        </select>
         <h2>Oversigt</h2>
       </div>
       {events.length > 0 ? (

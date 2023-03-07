@@ -50,7 +50,7 @@ a {
 button {
     font-family: "Titilium";
 }
-h1, h2 {
+h1, h2, h3 {
     font-family: "Playfair";
     font-weight: 100;
 }

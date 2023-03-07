@@ -35,27 +35,34 @@ const EventList = () => {
         events.map((item, i) => (
           <ul key={i}>
             <li>
-              <img
-                src={item.image_small}
-                alt={`Et billede fra forestillingen ${item.title}`}
-              />
+              <div>
+                <img
+                  src={item.image_small}
+                  alt={`Et billede fra forestillingen ${item.title}`}
+                />
+              </div>
+
               <h3>{item.title}</h3>
-              <p>{item.stage_name}</p>
-              <DateRange dateRange={item.startdate + " - " + item.stopdate} />
-              <Link to={`/events/${item.id}`}>
-                <CTAButton
-                  width="1rem"
-                  bgColor={(props) => props.theme.colors.tertiary}
-                  btnText="LÆS MERE"
-                />
-              </Link>
-              <Link to="/">
-                <CTAButton
-                  width="1rem"
-                  bgColor={(props) => props.theme.colors.primary}
-                  btnText="KØB BILLET"
-                />
-              </Link>
+              <div>
+                <p>{item.stage_name}</p>
+                <DateRange dateRange={item.startdate + " - " + item.stopdate} />
+              </div>
+              <div>
+                <Link to={`/events/${item.id}`}>
+                  <CTAButton
+                    width="1rem"
+                    bgColor={(props) => props.theme.colors.tertiary}
+                    btnText="LÆS MERE"
+                  />
+                </Link>
+                <Link to="/">
+                  <CTAButton
+                    width="1rem"
+                    bgColor={(props) => props.theme.colors.primary}
+                    btnText="KØB BILLET"
+                  />
+                </Link>
+              </div>
             </li>
           </ul>
         ))

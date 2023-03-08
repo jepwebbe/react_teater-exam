@@ -43,6 +43,7 @@ const EventsDetails = () => {
     };
     getReviews();
   }, [id, reviewSent]);
+  
   return (
     <PageTwo
       title={`Forestillingen ${

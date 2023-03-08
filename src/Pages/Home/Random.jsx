@@ -30,7 +30,7 @@ const Random = () => {
                   <Link to={`/events/${item.id}`} >
                     <CTAButton width="1rem" bgColor={props => props.theme.colors.tertiary} btnText="LÆS MERE"/>
                   </Link>
-                  <Link to="/">
+                  <Link to={`/events/${item.id}/bestil`}>
                     <CTAButton width="1rem" bgColor={props => props.theme.colors.primary} btnText="KØB BILLET"/>
                   </Link>
                 </div>

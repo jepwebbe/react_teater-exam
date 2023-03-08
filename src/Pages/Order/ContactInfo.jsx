@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { ContactInfoStyled } from "./ContactInfo.Styled";
 import { useOrderStore } from "./useOrderStore";
 
-const ContactInfo = ({eventid}) => {
+const ContactInfo = ({eventid }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     event_id: eventid,
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     address: "",
     zipcode: "",
     city: "",
   });
-  console.log(eventid)
   const { setOrder } = useOrderStore()
   // Updates the state whenever anything is written in the input field
   const [isValid, setIsValid] = useState(true);
@@ -43,17 +42,17 @@ const ContactInfo = ({eventid}) => {
       return;
     }
     setOrder(formData)
-
+    navigate(`/events/${eventid}/godkend`)
 }
-console.log()
+
   return (
     <ContactInfoStyled onSubmit={handleSubmit}>
       <div>
         <input
           onChange={handleChange}
           type="text"
-          name="firstName"
-          value={formData.firstName}
+          name="firstname"
+          value={formData.firstname}
           placeholder="Fornavn"
           maxLength="80"
           required
@@ -61,8 +60,8 @@ console.log()
         <input
           onChange={handleChange}
           type="text"
-          name="lastName"
-          value={formData.lastName}
+          name="lastname"
+          value={formData.lastname}
           placeholder="Efternavn"
           maxLength="80"
           required

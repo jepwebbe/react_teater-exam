@@ -10,8 +10,6 @@ const ChooseOrder = () => {
   const { id } = useParams();
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
-  console.log("seats", seats);
-  console.log("event", event);
   return (
     <PageTwo>
       <ChooseOrderStyled>
@@ -33,7 +31,7 @@ const ChooseOrder = () => {
                     {event.item.starttime}
                   </p>
                 </div>
-                <ContactInfo eventid={event.item.id}/>
+                <ContactInfo eventid={event.item.id} />
               </div>
               <div>
                 <p>{event.item.stage_name}</p>

@@ -8,7 +8,7 @@ import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ConfirmOrderStyled } from "./ConfirmOrder.Styled";
 import { useOrderStore } from "./useOrderStore";
 
-const ConfirmOrder = ({ history }) => {
+const ConfirmOrder = () => {
   const { id } = useParams();
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
   const {state: bookings } = useGetApiDataFromEndpoint("reservations")
@@ -39,7 +39,7 @@ const ConfirmOrder = ({ history }) => {
         {event.item ? (
           <div>
             <div>
-              <img src={event.item.image} />
+              <img src={event.item.image} alt={`Et billede fra forestillingen ${event.item.title}`} />
             </div>
             <div>
               <h2>Godkend ordre</h2>

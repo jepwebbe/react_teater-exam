@@ -5,11 +5,16 @@ import { Link, useParams } from "react-router-dom";
 import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
 import DateRange from "../../Components/Partials/DateFormatter";
+import Login from "../../Components/Partials/Login/Login";
+import { useLoginStore } from "../../Components/Partials/Login/useLoginStore";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { EventsDetailsStyled } from "./EventsDetails.Styled";
 import AddReview from "./Review/AddReview";
+import { BsCardText } from "react-icons/bs";
 
 const EventsDetails = () => {
+  const { loggedIn } = useLoginStore();
+
   // Destructuring of hooks
   const { id } = useParams();
 
@@ -43,7 +48,7 @@ const EventsDetails = () => {
     };
     getReviews();
   }, [id, reviewSent]);
-  
+
   return (
     <PageTwo
       title={`Forestillingen ${
@@ -117,7 +122,6 @@ const EventsDetails = () => {
                             padding: "0 2px",
                           }}
                         >
-
                           {i < parseInt(review.num_stars) ? "\u2605" : "\u2606"}
                         </span>
                       ))}
@@ -132,10 +136,20 @@ const EventsDetails = () => {
                 ))}
               </ul>
             </div>
-            <AddReview
-              eventId={eventDetails.item.id}
-              setReviewSent={setReviewSent}
-            />
+            {loggedIn ? (
+              <AddReview
+                eventId={eventDetails.item.id}
+                setReviewSent={setReviewSent}
+              />
+            ) : (
+              <div className="login">
+                <div>
+                  <h4><BsCardText /> Skriv en anmeldelse</h4>
+                  <p>Du skal være logget ind for at skrive en anmeldelse</p>
+                </div>
+                <Login />
+              </div>
+            )}
           </>
         ) : (
           <p>Indlæser</p>

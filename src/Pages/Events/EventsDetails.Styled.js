@@ -8,7 +8,7 @@ export const EventsDetailsStyled = styled.section`
     aspect-ratio: 1150 / 684;
     overflow: hidden;
     img {
-      transform: scale(1.2)
+      transform: scale(1.2);
     }
   }
   // Event date and price and stage
@@ -113,6 +113,44 @@ export const EventsDetailsStyled = styled.section`
           color: ${(props) => props.theme.colors.primary};
         }
       }
+    }
+  }
+  div.login {
+    background-color: ${(props) => props.theme.colors.secondary};
+    padding: 2rem 0;
+    svg {
+      color: white;
+      font-size: 1.5rem;
+    }
+    h4, p {
+      color: white;
+      padding: 0;
+      margin: 0 0 0 1rem;
+      font-size: 1.5rem;
+    }
+    span {
+      color: red;
+      margin-left: 3.5rem;
+    }
+    input {
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+    }
+    p,
+    input, h4 {
+      margin-left: 3.5rem;
+    }
+    input {
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+    button {
+      background-color: ${(props) => props.theme.colors.theGreen};
+      border: none;
+      color: white;
+      width: 4rem;
+      cursor: pointer;
     }
   }
 `;

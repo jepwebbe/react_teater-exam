@@ -29,6 +29,7 @@ export const StyledAddReview = styled.form`
     line-height: 2;
     width: 80%;
     margin-left: 1rem;
+    resize: none;
   }
   input.stars {
     border: none;
@@ -75,18 +76,6 @@ export const StyledAddReview = styled.form`
     p {
       color: white;
     }
-    p,
-    input {
-      margin-left: 3.5rem;
-    }
-    input {
-      margin-bottom: 0;
-    }
-    button {
-      background-color: ${(props) => props.theme.colors.theGreen};
-      border: none;
-      color: white;
-      width: 4rem;
-    }
+
   }
 `;

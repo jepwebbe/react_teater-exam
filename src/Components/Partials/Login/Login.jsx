@@ -15,6 +15,7 @@ const Login = ({ forward }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
   // function that manages the login request, takes the submitdata from the form as parameter
   const onSubmit = (submitdata) => {
@@ -37,12 +38,13 @@ const Login = ({ forward }) => {
         }
       } catch (error) {
         console.error(error);
+        // Set an error message to display to the user
+      setError("loginFailed", { message: "Forkert brugernavn eller kodeord" });
       }
       if (forward) {
         navigate("/minside");
-      }
-      else {
-        return
+      } else {
+        return;
       }
     };
     fetchResult();
@@ -73,8 +75,13 @@ const Login = ({ forward }) => {
               autoComplete="password"
               placeholder="kodeord"
             />
+
             <button>LOGIN</button>
           </div>
+          {errors.password && errors.password.type === "required" && (
+            <span>Udfyld venligst dit kodeord</span>
+          )}
+          {errors.loginFailed && <span>{errors.loginFailed.message}</span>}
         </form>
       ) : (
         <>

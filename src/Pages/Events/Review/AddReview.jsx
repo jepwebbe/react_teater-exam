@@ -4,10 +4,9 @@ import appService from "../../../Components/App/Appservices/AppService";
 import { useLoginStore } from "../../../Components/Partials/Login/useLoginStore";
 import { StyledAddReview } from "./AddReview.Styled";
 import { BsCardText } from "react-icons/bs";
-import Login from "../../../Components/Partials/Login/Login";
 
 const AddReview = ({ eventId, setReviewSent }) => {
-  const { loggedIn, userInfo } = useLoginStore();
+  const { userInfo } = useLoginStore();
   const [reviewSent, setLocalReviewSent] = useState(false);
 
   // Destructure form methods from useForm
@@ -47,8 +46,7 @@ const AddReview = ({ eventId, setReviewSent }) => {
           <BsCardText />
           <h4>Skriv en anmeldelse</h4>
         </div>
-        {loggedIn ? (
-          !reviewSent ? (
+        {!reviewSent ? (
             <>
               <input
                 type="hidden"
@@ -79,7 +77,7 @@ const AddReview = ({ eventId, setReviewSent }) => {
                   {...register("comment", { required: true })}
                   id="comment"
                   placeholder="Kommentar"
-                  rows="1"
+                  rows="2"
                 ></textarea>
                 <input className="submit" type="submit" value="Send" />
               </div>
@@ -89,12 +87,7 @@ const AddReview = ({ eventId, setReviewSent }) => {
               <h4>Tak for din anmeldelse</h4>
             </div>
           )
-        ) : (
-          <div className="user-message">
-            <p>Du skal være logget ind for at skrive en anmeldelse</p>
-            <Login forward={false}/>
-          </div>
-        )}
+        }
       </StyledAddReview>
     </>
   );

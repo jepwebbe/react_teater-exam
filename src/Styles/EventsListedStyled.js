@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const EventsListedStyled = styled.ul`
   // eventlist section
-  margin-top: ${props => props.mTop};
+  margin-top: ${(props) => props.mTop};
   padding: 0;
   li {
     width: 100%;
@@ -19,7 +19,7 @@ export const EventsListedStyled = styled.ul`
       img {
         height: 100%;
         width: 100%;
-        object-fit: cover; 
+        object-fit: cover;
         margin-top: 1rem;
         transform: scale(1.5);
       }
@@ -48,19 +48,34 @@ export const EventsListedStyled = styled.ul`
     }
     // ctabuttons
     div:nth-child(4) {
-      a:last-of-type {
-        margin-left: 1rem;
-      }
+      display: flex;
+      gap: 1rem;
     }
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.l}) {
     li {
       height: 70px;
-      grid-template-columns: 1fr 2fr 3fr 3fr;
+      grid-template-columns: 1fr 2fr 3fr 2.8fr;
       div:nth-child(1) {
-
       }
+    }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.m}) {
+    li div:nth-child(4) {
+      display: grid;
+      place-content: center;
+      span {
+        padding: 0.3rem 0.8rem;
+      }
+    }
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.im}) {
+    li {
+      grid-template-columns: 2fr 2fr 3fr 2.8fr;
+    }
+    li h3 {
+      font-size: 1.4rem;
     }
   }
 `;

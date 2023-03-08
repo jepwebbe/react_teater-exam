@@ -15,7 +15,7 @@ export const Nav = () => {
   const [loginMenu, setLoginMenu] = useState(false);
   // destructuring of login hook
   const { loggedIn } = useLoginStore();
-
+  // adjusts the burgermenu boolean according to window size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= burgerWidth) {
@@ -85,7 +85,7 @@ export const Nav = () => {
           {!loggedIn ? (
             <p onClick={showLogin}>LOGIN</p>
           ) : (
-            <Link to="/minside">MIN SIDE</Link>
+            <NavLink to="/minside">MIN SIDE</NavLink>
           )}
           <div style={{ display: loginMenu ? "block" : "none" }}>
             <Login forward={true} />

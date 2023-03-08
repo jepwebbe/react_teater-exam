@@ -1,21 +1,25 @@
 import styled from "styled-components";
 
 export const EventsDetailsStyled = styled.section`
-    border-left: 1px solid ${(props) => props.theme.colors.secondary};
-    border-right: 1px solid ${(props) => props.theme.colors.secondary};
-  > img {
-    border: 10px solid ${(props) => props.theme.colors.secondary};
+  border-left: 1px solid ${(props) => props.theme.colors.secondary};
+  border-right: 1px solid ${(props) => props.theme.colors.secondary};
+  > div:nth-child(1) {
+    border: 15px solid ${(props) => props.theme.colors.secondary};
+    aspect-ratio: 1150 / 684;
+    overflow: hidden;
+    img {
+      transform: scale(1.2)
+    }
   }
   // Event date and price and stage
-  >div {
+  > div {
     padding: 0 1rem;
   }
   h3 {
     font-size: 1.5rem;
-    color: ${props => props.theme.colors.theLightGrey}
+    color: ${(props) => props.theme.colors.theLightGrey};
   }
   div:nth-child(2) {
-
     display: flex;
     justify-content: space-between;
     > div {
@@ -28,7 +32,7 @@ export const EventsDetailsStyled = styled.section`
       }
     }
     p {
-        font-size: 1.3rem;
+      font-size: 1.3rem;
     }
   }
   // Event title and CTA
@@ -65,7 +69,6 @@ export const EventsDetailsStyled = styled.section`
   }
   // Actors
   div:nth-child(5) {
-
     ul {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -87,23 +90,29 @@ export const EventsDetailsStyled = styled.section`
   }
   // Reviews
   div:nth-child(6) {
-
+    border-top: 1px solid ${(props) => props.theme.colors.secondary};
+    border-top-style: dashed;
+    h3 {
+      border-bottom: 1px solid #dfdfdf;
+      margin: 0;
+      padding: 1rem 0;
+    }
     ul {
-        padding: 0;
-        li {
-            border-bottom: 1px solid #DFDFDF;
-            >p:nth-child(2) {
-                font-size: 0.8rem;
-                color: ${props => props.theme.colors.theLightGrey}
-            }
-            >p:nth-child(3) {
-                font-weight: bold;
-                font-size: 1.2rem;
-            }
-            >p:nth-child(4) {
-                color: ${props => props.theme.colors.primary}
-            }
+      padding: 0;
+      li {
+        border-bottom: 1px solid #dfdfdf;
+        > p:nth-child(2) {
+          font-size: 0.8rem;
+          color: ${(props) => props.theme.colors.theLightGrey};
         }
+        > p:nth-child(3) {
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+        > p:nth-child(4) {
+          color: ${(props) => props.theme.colors.primary};
+        }
+      }
     }
   }
 `;

@@ -29,7 +29,7 @@ body {
 }
 #root {
     height: 100%;
-    width: 80vw;
+    width: 76vw;
     margin: 0 auto;
     display: grid;
     grid-template-rows: auto 1fr auto;

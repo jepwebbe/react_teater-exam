@@ -55,7 +55,7 @@ export const HeroStyled = styled.article`
     grid-template-columns: 1fr;
     > div:nth-child(1){
       grid-area: 1 / 1 / -1 / -1;
-      z-index: 2000;
+      z-index: 100;
       place-self: center;
       background-color: #ffffff90;
       height: auto;

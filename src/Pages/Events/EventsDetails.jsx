@@ -53,10 +53,12 @@ const EventsDetails = () => {
       <EventsDetailsStyled>
         {eventDetails.item ? (
           <>
-            <img
-              src={eventDetails.item.image_large}
-              alt={`Et billede fra forestillingen ${eventDetails.item.title}`}
-            />
+            <div>
+              <img
+                src={eventDetails.item.image_large}
+                alt={`Et billede fra forestillingen ${eventDetails.item.title}`}
+              />
+            </div>
             <div>
               <div>
                 <p>{eventDetails.item?.stage_name.toUpperCase()}</p>{" "}
@@ -86,8 +88,8 @@ const EventsDetails = () => {
               <h3>MEDVIRKENDE</h3>
               <ul>
                 {eventDetails.item.actors.map((actor, i) => (
-                  <Link to={`/skuespillere/${actor.id}`}>
-                    <li key={i}>
+                  <Link to={`/skuespillere/${actor.id}`} key={i}>
+                    <li>
                       <img
                         src={actor.image}
                         alt={`Et billede af skuespilleren ${actor.name}`}
@@ -103,18 +105,36 @@ const EventsDetails = () => {
               <ul>
                 {reviews?.map((review, ix) => (
                   <li key={ix}>
-                    <div>Antal stjerner {review.num_stars}</div>
+                    <div>
+                      {/* This is coauthored by chatGPT */}
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <span
+                          key={i}
+                          style={{
+                            color: "#B08058",
+                            textShadow: "0 0 1px #B08058, 0 0 2px #B08058",
+                            padding: "0 2px",
+                          }}
+                        >
+
+                          {i < parseInt(review.num_stars) ? "\u2605" : "\u2606"}
+                        </span>
+                      ))}
+                    </div>
                     <p>{review.created}</p>
                     <p>
-                      {review.user.firstname.toUpperCase()} {review.user.lastname.toUpperCase()}
+                      {review.user.firstname.toUpperCase()}{" "}
+                      {review.user.lastname.toUpperCase()}
                     </p>
                     <p>{review.comment}</p>
                   </li>
                 ))}
               </ul>
-            
             </div>
-            <AddReview eventId={eventDetails.item.id} setReviewSent={setReviewSent}/>
+            <AddReview
+              eventId={eventDetails.item.id}
+              setReviewSent={setReviewSent}
+            />
           </>
         ) : (
           <p>Indlæser</p>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const EventListStyled = styled.section`
-// heading section
+// heading section - the rest is in Styles EventsListedStyled
   > div:nth-child(1) {
     display: flex;
     justify-content: space-between;

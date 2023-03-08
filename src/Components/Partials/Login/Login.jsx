@@ -41,16 +41,19 @@ const Login = ({ forward }) => {
       if (forward) {
         navigate("/minside");
       }
+      else {
+        return
+      }
     };
     fetchResult();
   };
   // function to handle logout and navigate to index via the custom hook
   const handleLogout = () => {
-    setLoggedIn(false, "", "");
+    setLoggedIn(false);
     navigate("/");
   };
   return (
-    <>
+    <div>
       {!loggedIn ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -75,11 +78,11 @@ const Login = ({ forward }) => {
         </form>
       ) : (
         <>
-          <h3>{username} er logget in</h3>
-          <button onClick={() => handleLogout()}>Log ud</button>
+          <p>DU ER LOGGET IND SOM {username.toUpperCase()}</p>
+          <button onClick={() => handleLogout()}>LOG UD</button>
         </>
       )}
-    </>
+    </div>
   );
 };
 

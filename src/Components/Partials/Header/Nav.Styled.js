@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const NavStyled = styled.nav`
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -98,11 +99,15 @@ export const NavStyled = styled.nav`
       }
     }
     ul {
+      border: 1px solid ${props => props.theme.colors.theGrey};
+      margin-top: -0.1rem;
       flex-direction: column;
-      padding: 1rem;
-      margin: 0;
+      padding: 1rem 0;
       background-color: white;
       z-index: 1000;
+      li {
+        padding: 0 0.3rem;
+      }
     }
   } ;
 `;

@@ -22,16 +22,18 @@ const Random = () => {
           {randomSlice.map((item, i) => (
             <article key={i}>
                 <div><img src={item.image_medium} alt={`Et billede fra forestillingen ${item.title}`}/></div>
-                <p>{item.stage_name.toUpperCase()}</p>
-                <DateRange dateRange={item.startdate + " - " + item.stopdate} />
-                <h2>{item.title}</h2>
-                <p>{item.genre.toUpperCase()}</p>
-                <Link to={`/events/${item.id}`} >
-                  <CTAButton width="1rem" bgColor={props => props.theme.colors.tertiary} btnText="LÆS MERE"/>
-                </Link>
-                <Link to="/">
-                  <CTAButton width="1rem" bgColor={props => props.theme.colors.primary} btnText="KØB BILLET"/>
-                </Link>
+                <div>
+                  <p>{item.stage_name.toUpperCase()}</p>
+                  <DateRange dateRange={item.startdate + " - " + item.stopdate} />
+                  <h2>{item.title}</h2>
+                  <p>{item.genre.toUpperCase()}</p>
+                  <Link to={`/events/${item.id}`} >
+                    <CTAButton width="1rem" bgColor={props => props.theme.colors.tertiary} btnText="LÆS MERE"/>
+                  </Link>
+                  <Link to="/">
+                    <CTAButton width="1rem" bgColor={props => props.theme.colors.primary} btnText="KØB BILLET"/>
+                  </Link>
+                </div>
             </article>
           ))}
           </div>
@@ -42,7 +44,7 @@ const Random = () => {
           </div>
         </RandomStyled>
       ) : (
-        <p>Indlæser</p>
+        <p>Loading</p>
       )}
     </>
   );

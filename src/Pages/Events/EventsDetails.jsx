@@ -80,11 +80,13 @@ const EventsDetails = () => {
             </div>
             <div>
               <h2>{eventDetails.item.title}</h2>
-              <CTAButton
-                width="1rem"
-                bgColor={(props) => props.theme.colors.secondary}
-                btnText="KØB BILLET"
-              />
+              <Link to={`/events/${eventDetails.item.id}/bestil`}>
+                <CTAButton
+                  width="1rem"
+                  bgColor={(props) => props.theme.colors.secondary}
+                  btnText="KØB BILLET"
+                />
+              </Link>
             </div>
             <div>
               <p>{eventDetails.item.genre.toUpperCase()}</p>

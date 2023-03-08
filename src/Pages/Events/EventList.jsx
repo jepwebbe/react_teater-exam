@@ -87,7 +87,7 @@ const EventList = () => {
                     btnText="LÆS MERE"
                   />
                 </Link>
-                <Link to="/">
+                <Link to={`/events/${item.id}/bestil`}>
                   <CTAButton
                     width="1rem"
                     bgColor={(props) => props.theme.colors.primary}

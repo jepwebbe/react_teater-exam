@@ -22,6 +22,7 @@ export const ChooseOrderStyled = styled.section`
         display: inline-block;
         width: 2rem;
         height: 2rem;
+        cursor: pointer;
       }
       span.bookedNow {
         background-color: ${(props) => props.theme.colors.tertiary};

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CTAButton from "../../Components/Partials/CTAButton";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ChooseOrderStyled } from "./ChooseOrder.Styled";
 import ContactInfo from "./ContactInfo";
+import { ContactInfoStyled } from "./ContactInfo.Styled";
 import { useOrderStore } from "./useOrderStore";
 
 const ChooseOrder = () => {
@@ -12,7 +13,22 @@ const ChooseOrder = () => {
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
   const { setOrder, OrderInfo } = useOrderStore();
-  console.log("orderinfoseats", OrderInfo.seats);
+  const [formErrors, setFormErrors] = useState({});
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    event_id: event.item?.id,
+    firstname: "",
+    lastname: "",
+    email: "",
+    address: "",
+    zipcode: "",
+    city: "",
+    seats: [],
+  });
+  // Updates the state whenever anything is written in the input field
+  const [isValid, setIsValid] = useState(true);
+
   const handleSeatClick = (event, seat) => {
     event.currentTarget.classList.toggle("bookedNow");
     // Check to se if the seat is already in the OrderInfo
@@ -32,8 +48,43 @@ const ChooseOrder = () => {
     }
   };
 
+  // Contactform
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: value,
+      };
+    });
+    const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    if (name == "email") {
+      if (!emailRegex.test(value)) {
+        setIsValid(false);
+      } else {
+        setIsValid(true);
+      }
+    }
+  };
+  const handleSubmit = () => {
+    if (!isValid) {
+      setFormErrors({
+        message: 'Indtast venligst en gyldig email',
+      })
+      return;
+    }
+    const { firstname, lastname, email, address, zipcode, city } = formData;
+    if (!firstname || !lastname || !email || !address || !zipcode || !city) {
+      setFormErrors({
+        message: 'Udfyld venligst alle felter',
+      });
+      return;
+    }
+    setOrder(formData);
+    navigate(`/events/${event.item.id}/godkend`);
+  };
   return (
-    <PageTwo>
+    <PageTwo title={`Køb billet til ${event.item?.title}`}>
       <ChooseOrderStyled>
         {event.item ? (
           <>
@@ -53,7 +104,64 @@ const ChooseOrder = () => {
                     {event.item.starttime}
                   </p>
                 </div>
-                <ContactInfo eventid={event.item.id} />
+                <ContactInfoStyled onSubmit={handleSubmit}>
+                  <div>
+                    <input
+                      onChange={handleChange}
+                      type="text"
+                      name="firstname"
+                      value={formData.firstname}
+                      placeholder="Fornavn"
+                      maxLength="80"
+                      required
+                    />
+
+                    <input
+                      onChange={handleChange}
+                      type="text"
+                      name="lastname"
+                      value={formData.lastname}
+                      placeholder="Efternavn"
+                      maxLength="80"
+                      required
+                    />{" "}
+                    <input
+                      onChange={handleChange}
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      placeholder="Vejnavn & nr"
+                      required
+                    />
+                    <div className="address">
+                      <input
+                        onChange={handleChange}
+                        type="number"
+                        name="zipcode"
+                        value={formData.zipcode}
+                        placeholder="Postnummer"
+                        required
+                      />
+                      <input
+                        onChange={handleChange}
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        placeholder="By"
+                        required
+                      />
+                    </div>
+                    <input
+                      onChange={handleChange}
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      placeholder="Emailadresse"
+                      required
+                    />
+                    {formErrors && <p>{formErrors.message}</p>}
+                  </div>
+                </ContactInfoStyled>
               </div>
               <div>
                 <p>{event.item.stage_name}</p>
@@ -77,11 +185,13 @@ const ChooseOrder = () => {
                 </div>
               </div>
             </div>
-            <CTAButton
-              width="1rem"
-              bgColor={(props) => props.theme.colors.secondary}
-              btnText="GODKEND BESTILLING"
-            />
+            <div onClick={handleSubmit}>
+              <CTAButton
+                width="1rem"
+                bgColor={(props) => props.theme.colors.secondary}
+                btnText="GODKEND BESTILLING"
+              />
+            </div>
           </>
         ) : (
           <p>Indlæser</p>

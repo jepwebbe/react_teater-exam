@@ -13,6 +13,7 @@ const ContactInfo = ({eventid }) => {
     address: "",
     zipcode: "",
     city: "",
+    seats: []
   });
   const { setOrder } = useOrderStore()
   // Updates the state whenever anything is written in the input field

@@ -9,6 +9,7 @@ import MyPage from "../../../Pages/MyPage/MyPage";
 import { NotFound } from "../../../Pages/NotFound";
 import ChooseOrder from "../../../Pages/Order/ChooseOrder";
 import ConfirmOrder from "../../../Pages/Order/ConfirmOrder";
+import Thanks from "../../../Pages/Order/Thanks";
 import SearchResult from "../../../Pages/SearchResult";
 // Defines the routes via the react-router-dom routing
 const Router = () => {
@@ -19,6 +20,7 @@ const Router = () => {
       <Route path="/events/:id" element={<EventsDetails />} />
       <Route path="/events/:id/bestil" element={<ChooseOrder />} />
       <Route path="/events/:id/godkend" element={<ConfirmOrder />} />
+      <Route path="/events/:id/tak" element={<Thanks />} />
       <Route path="/skuespillere" element={<Actors />} />
       <Route path="/skuespillere/:id" element={<ActorsDetails />} />
       <Route path="/resultat" element={<SearchResult />} />

@@ -1,18 +1,40 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
+import useGetApiDataFromEndpoint from "../../Hooks/useGetApiDataFromEndpoint";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ConfirmOrderStyled } from "./ConfirmOrder.Styled";
 import { useOrderStore } from "./useOrderStore";
 
-const ConfirmOrder = () => {
+const ConfirmOrder = ({ history }) => {
   const { id } = useParams();
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
+  const {state: bookings } = useGetApiDataFromEndpoint("reservations")
   const { OrderInfo } = useOrderStore();
   console.log("orderinfo", OrderInfo);
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const submitOrder = () => {
+    const buy = async () => {
+      try {
+        await appService.Create("reservations", { OrderInfo });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    buy();
+    console.log("bookings", bookings)
+
+  };
+
+
   return (
-    <PageTwo>
+    <PageTwo title="Godkend dit køb">
       <ConfirmOrderStyled>
         {event.item ? (
           <div>
@@ -36,13 +58,13 @@ const ConfirmOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/*                   {OrderInfo.seats.map((seat, i) => (
-                    <tr>
-                      <td>{seat.number}</td>
+                  {OrderInfo.seats.map((seat, i) => (
+                    <tr key={i}>
+                      <td>{seat.id}</td>
                       <td>{seat.line}</td>
                       <td>{event.item.price}</td>
                     </tr>
-                  ))} */}
+                  ))}
                 </tbody>
               </table>
               <p>PRIS INKL. MOMS & BILLETGEBYR</p>
@@ -71,12 +93,16 @@ const ConfirmOrder = () => {
           width="1rem"
           bgColor={(props) => props.theme.colors.secondary}
           btnText="TILBAGE"
+          onClick={goBack}
         />
-        <CTAButton
-          width="1rem"
-          bgColor={(props) => props.theme.colors.secondary}
-          btnText="GODKEND BESTILLING"
-        />
+        
+          <div onClick={() => submitOrder()}  >
+              <CTAButton
+                width="1rem"
+                bgColor={(props) => props.theme.colors.secondary}
+                btnText="GODKEND BESTILLING"
+                        />
+          </div>
       </ConfirmOrderStyled>
     </PageTwo>
   );

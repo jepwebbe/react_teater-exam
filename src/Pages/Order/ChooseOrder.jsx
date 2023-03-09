@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CTAButton from "../../Components/Partials/CTAButton";
+import Login from "../../Components/Partials/Login/Login";
+import { useLoginStore } from "../../Components/Partials/Login/useLoginStore";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ChooseOrderStyled } from "./ChooseOrder.Styled";
@@ -13,6 +15,8 @@ const ChooseOrder = () => {
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
   const { setOrder, OrderInfo } = useOrderStore();
   const [formErrors, setFormErrors] = useState({});
+  const { loggedIn, userInfo } = useLoginStore();
+
 
   const navigate = useNavigate();
 
@@ -21,7 +25,7 @@ const ChooseOrder = () => {
     event_id: "",
     firstname: "",
     lastname: "",
-    email: "",
+    email: loggedIn ? userInfo.email : "" ,
     address: "",
     zipcode: "",
     city: "",
@@ -136,8 +140,9 @@ const ChooseOrder = () => {
                       {event.item.starttime}
                     </p>
                   </div>
+                  {loggedIn ?
                   <ContactInfoStyled onSubmit={handleSubmit}>
-                    <div>
+                     <div>
                       <div>
                         <label htmlFor="firstname">FORNAVN</label>
                         <input
@@ -204,8 +209,9 @@ const ChooseOrder = () => {
                         />
                       </div>
                       {formErrors && <p>{formErrors.message}</p>}
-                    </div>
+                    </div> 
                   </ContactInfoStyled>
+                  : (<><h3>Log ind for at fortsætte</h3> <Login /></>)}
                   <p>ALLE FELTER SKAL UDFYLDES</p>
                   <div>
                     <p>

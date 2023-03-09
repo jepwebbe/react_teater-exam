@@ -26,6 +26,7 @@ export const MyPageStyled = styled.section`
         width: 5rem;
         height: 2rem;
         font-weight: bold;
+        cursor: pointer;
       }
     }
   }

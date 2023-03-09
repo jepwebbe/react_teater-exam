@@ -234,14 +234,12 @@ const BookingDetails = ({ bookingId, price }) => {
   const { state: bookingDetails } = useGetByIdApiDataFromEndpoint(
     "reservations",
     bookingId,
-    "item"
   );
-  console.log(bookingDetails);
 
   return (
     <>
-      <td>{bookingDetails?.reservation.reservationlines.length}</td>
-      <td>{bookingDetails?.reservation.reservationlines.length * price}.00</td>
+      <td>{bookingDetails.item && bookingDetails?.reservation.reservationlines.length}</td>
+      <td>{bookingDetails.item && bookingDetails?.reservation.reservationlines.length * price}.00</td>
     </>
   );
 };

@@ -10,13 +10,18 @@ import appService from "../../Components/App/Appservices/AppService";
 
 const MyPage = () => {
   const { loggedIn, userInfo } = useLoginStore();
-  const { state: allReviews } = useGetApiDataFromEndpoint("reviews", "items");
   const { state: allBookings } = useGetApiDataFromEndpoint(
     "reservations",
     "items"
   );
   const [favorites, setFavorites] = useState([]);
-  const [favoritesCount, setFavoritesCount] = useState(0);
+  const [deleteCount, setDeleteCount] = useState(0);
+
+  const { state: allReviews } = useGetApiDataFromEndpoint(
+    "reviews",
+    "items",
+    deleteCount
+  );
 
   // Filter out all reviews made by logged in user in new variable
   // parses the user_Id to an integer first
@@ -26,25 +31,34 @@ const MyPage = () => {
       (item) => parseInt(item.user_id, 10) === userInfo.user_id
     );
   useEffect(() => {
-    if (loggedIn) {
-      const getData = async () => {
-        try {
-          const result = await appService.Get("favorites");
-          setFavorites(result.data.items);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getData();
-    }
-  }, [favoritesCount]);
-  // removes favorite onClick, takes the id as a parameter
-  // subtracts from faveoritesCount to ensure a rerender of the favorite fetch
+    const getData = async () => {
+      try {
+        const result = await appService.Get("favorites");
+        setFavorites(result.data.items);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [deleteCount]);
+  // removes favorite/review onClick, takes the id as a parameter
+  // subtracts from deleteCount to ensure a rerender of the fetched items
   const deleteFavorite = (eventid) => {
     const remove = async () => {
       try {
         await appService.Remove("favorites", eventid);
-        setFavoritesCount(-1);
+        setDeleteCount(-1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    remove();
+  };
+  const deleteReview = (eventid) => {
+    const remove = async () => {
+      try {
+        await appService.Remove("reviews", eventid);
+        setDeleteCount(-1);
       } catch (error) {
         console.error(error);
       }
@@ -110,7 +124,10 @@ const MyPage = () => {
                   <tr key={i}>
                     <td>{favorite.title}</td>
                     <td>
-                      <TiDeleteOutline className="delete" onClick={() => deleteFavorite(favorite.event_id)}/>
+                      <TiDeleteOutline
+                        className="delete"
+                        onClick={() => deleteFavorite(favorite.event_id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -163,7 +180,11 @@ const MyPage = () => {
                     </td>
 
                     <td>
-                      <FaPen className="edit"/> <TiDeleteOutline className="delete" />
+                      <FaPen className="edit" />{" "}
+                      <TiDeleteOutline
+                        className="delete"
+                        onClick={() => deleteReview(review.id)}
+                      />
                     </td>
                   </tr>
                 ))}

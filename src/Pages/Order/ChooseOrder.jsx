@@ -38,7 +38,7 @@ const ChooseOrder = () => {
     if (formData.event_id === OrderInfo.event_id) {
       setFormData(OrderInfo);
     }
-  }, [event]);
+  }, [event, OrderInfo, formData.event_id]);
 
   // function to handle the seat choice
   const handleSeatClick = (event, seat) => {
@@ -58,7 +58,6 @@ const ChooseOrder = () => {
         seats: formData.seats.filter((id) => id !== seat),
       });
     }
-    console.log("formData", formData);
   };
 
   // Contactform function that sets the formData on a change
@@ -72,7 +71,7 @@ const ChooseOrder = () => {
     });
     // Regex chekcs if the email is valid or not acc. to pattern
     const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-    if (name == "email") {
+    if (name === "email") {
       if (!emailRegex.test(value)) {
         setIsValid(false);
       } else {
@@ -100,6 +99,18 @@ const ChooseOrder = () => {
     }
     setOrder(formData);
     navigate(`/events/${event.item.id}/godkend`);
+  };
+  // function to remove seats from the array
+  const handleRemoveSeat = () => {
+    // remove the last seat from the formData.seats array
+    setFormData((prevFormData) => {
+      const newSeats = [...prevFormData.seats];
+      newSeats.pop();
+      return {
+        ...prevFormData,
+        seats: newSeats,
+      };
+    });
   };
 
   return (
@@ -198,9 +209,9 @@ const ChooseOrder = () => {
                   <p>ALLE FELTER SKAL UDFYLDES</p>
                   <div>
                     <p>
-                      ANTAL <span>-</span>
+                      ANTAL <button onClick={handleRemoveSeat}>-</button>
                       <span>{formData.seats.length}</span>
-                      <span>+</span>
+                      <button>+</button>
                     </p>
                     <div>
                       <p>PRIS {formData.seats.length * event.item.price} DKK</p>
@@ -215,7 +226,7 @@ const ChooseOrder = () => {
                   {seats.items ? (
                     seats.items.map((seat, i) => (
                       <React.Fragment key={i}>
-                        {seat.is_reserved == 0 ? (
+                        {seat.is_reserved === "0" ? (
                           <span
                             className={`free ${
                               seat.line === "1"
@@ -276,7 +287,6 @@ const ChooseOrder = () => {
                   )}
                 </div>
                 <p className="choose-text">VÆLG SIDDEPLADSER</p>
-
               </div>
             </div>
             <div onClick={handleSubmit}>

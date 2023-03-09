@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Login from "../../Components/Partials/Login/Login";
 import { useLoginStore } from "../../Components/Partials/Login/useLoginStore";
 import useGetApiDataFromEndpoint from "../../Hooks/useGetApiDataFromEndpoint";
@@ -6,6 +6,7 @@ import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { MyPageStyled } from "./MyPage.Styled";
 import { FaTicketAlt, FaHeart, FaStar, FaPen } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
+import appService from "../../Components/App/Appservices/AppService";
 
 const MyPage = () => {
   const { loggedIn, userInfo } = useLoginStore();
@@ -14,11 +15,8 @@ const MyPage = () => {
     "reservations",
     "items"
   );
-  const { state: allFavorites } = useGetApiDataFromEndpoint(
-    "favorites",
-    "items"
-  );
-  console.log("user", userInfo);
+  const [favorites, setFavorites] = useState([]);
+  const [favoritesCount, setFavoritesCount] = useState(0);
 
   // Filter out all reviews made by logged in user in new variable
   // parses the user_Id to an integer first
@@ -27,7 +25,32 @@ const MyPage = () => {
     allReviews.filter(
       (item) => parseInt(item.user_id, 10) === userInfo.user_id
     );
-  console.log("myreviews", myReviews);
+  useEffect(() => {
+    if (loggedIn) {
+      const getData = async () => {
+        try {
+          const result = await appService.Get("favorites");
+          setFavorites(result.data.items);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getData();
+    }
+  }, [favoritesCount]);
+  // removes favorite onClick, takes the id as a parameter
+  // subtracts from faveoritesCount to ensure a rerender of the favorite fetch
+  const deleteFavorite = (eventid) => {
+    const remove = async () => {
+      try {
+        await appService.Remove("favorites", eventid);
+        setFavoritesCount(-1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    remove();
+  };
   return (
     <PageTwo
       title={`Hej ${userInfo.firstname} velkommen til Det Utrolige Teater`}
@@ -82,12 +105,12 @@ const MyPage = () => {
               </tr>
             </thead>
             <tbody>
-              {allFavorites &&
-                allFavorites.map((favorite, i) => (
+              {favorites &&
+                favorites.map((favorite, i) => (
                   <tr key={i}>
                     <td>{favorite.title}</td>
                     <td>
-                      <TiDeleteOutline />
+                      <TiDeleteOutline className="delete" onClick={() => deleteFavorite(favorite.event_id)}/>
                     </td>
                   </tr>
                 ))}
@@ -140,7 +163,7 @@ const MyPage = () => {
                     </td>
 
                     <td>
-                      <FaPen /> <TiDeleteOutline />
+                      <FaPen className="edit"/> <TiDeleteOutline className="delete" />
                     </td>
                   </tr>
                 ))}

@@ -11,6 +11,7 @@ import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { EventsDetailsStyled } from "./EventsDetails.Styled";
 import AddReview from "./Review/AddReview";
 import { BsCardText } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 const EventsDetails = () => {
   // Destructuring of hooks
@@ -21,6 +22,10 @@ const EventsDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
   const [reviews, setReviews] = useState([]);
   const [reviewSent, setReviewSent] = useState(false);
+  // favoritesCount only used to rerender fetch of favorites
+  // favorites used to hold api data
+  const [favoritesCount, setFavoritesCount] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   // fetch the event from the id in the url using useParams
   // and sets result to state variables
@@ -48,6 +53,48 @@ const EventsDetails = () => {
     getReviews();
   }, [id, reviewSent]);
 
+  // If user is logged in, it fetches favorites. Rerenders when loggedIn or favoritesCount changes
+  // to change appearance of favorite-icon
+  useEffect(() => {
+    if (loggedIn) {
+      const getData = async () => {
+        try {
+          const result = await appService.Get("favorites");
+          setFavorites(result.data.items);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getData();
+    }
+  }, [loggedIn, favoritesCount]);
+    // posts a favorite onClick, takes the id as a parameter
+  // adds to faveoritesCount to ensure a rerender of the favorite fetch
+  const postFavorite = (eventid) => {
+    const add = async () => {
+      try {
+        await appService.Create("favorites", { event_id:eventid });
+        setFavoritesCount(+1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    add();
+  };
+  // removes favorite onClick, takes the id as a parameter
+  // subtracts from faveoritesCount to ensure a rerender of the favorite fetch
+  const deleteFavorite = (eventid) => {
+    const remove = async () => {
+      try {
+        await appService.Remove("favorites", eventid );
+        setFavoritesCount(-1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    remove();
+  };
+
   return (
     <PageTwo
       title={`Forestillingen ${
@@ -63,6 +110,21 @@ const EventsDetails = () => {
                 src={eventDetails.item.image_large}
                 alt={`Et billede fra forestillingen ${eventDetails.item.title}`}
               />
+              {loggedIn ? (
+                favorites?.find((item) => item.event_id === eventDetails.item.id) ? (
+                  <AiFillHeart
+                    onClick={() => deleteFavorite(eventDetails.item.id)}
+                  />
+                ) : (
+                  <AiOutlineHeart
+                    onClick={() => postFavorite(eventDetails.item.id)}
+                  />
+                )
+              ) : (
+                <Link to="/login">
+                  <AiOutlineHeart />
+                </Link>
+              )}
             </div>
             <div>
               <div>
@@ -145,7 +207,9 @@ const EventsDetails = () => {
             ) : (
               <div className="login">
                 <div>
-                  <h4><BsCardText /> Skriv en anmeldelse</h4>
+                  <h4>
+                    <BsCardText /> Skriv en anmeldelse
+                  </h4>
                   <p>Du skal være logget ind for at skrive en anmeldelse</p>
                 </div>
                 <Login />

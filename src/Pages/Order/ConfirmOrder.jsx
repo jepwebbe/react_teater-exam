@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
-import useGetApiDataFromEndpoint from "../../Hooks/useGetApiDataFromEndpoint";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ConfirmOrderStyled } from "./ConfirmOrder.Styled";
@@ -15,7 +14,6 @@ const ConfirmOrder = () => {
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
 
   const { OrderInfo } = useOrderStore();
-  console.log("orderinfo", OrderInfo);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);

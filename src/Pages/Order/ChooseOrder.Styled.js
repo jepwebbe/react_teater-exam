@@ -73,19 +73,20 @@ export const ChooseOrderStyled = styled.section`
           justify-content: flex-end;
           margin-top: 3rem;
           > p:first-of-type {
-            span {
+            button, span {
               cursor: pointer;
+              border: none;
             }
-            span:nth-child(1),
-            span:nth-child(3) {
+            button:nth-child(1),
+            button:nth-child(3) {
               background-color: #dedede;
               padding: 1rem;
             }
-            span:nth-child(1) {
+            button:nth-child(1) {
               border-bottom-left-radius: 5px;
               border-top-left-radius: 5px;
             }
-            span:nth-child(3) {
+            button:nth-child(3) {
               border-bottom-right-radius: 5px;
               border-top-right-radius: 5px;
             }
@@ -131,9 +132,8 @@ export const ChooseOrderStyled = styled.section`
       }
       div.venue {
         display: grid;
-        grid-template-rows: repeat(auto, 1fr);
-        justify-content: space-between;
-        gap: 0.5rem;
+        justify-content: center;
+        row-gap: 1rem;
 
       }
       p.choose-text {
@@ -143,9 +143,10 @@ export const ChooseOrderStyled = styled.section`
         border-radius: 50%;
         border: 1px solid ${(props) => props.theme.colors.secondary};
         display: inline-block;
-        width: 4rem;
-        height: 4rem;
+        width: 2.5rem;
+        height: 2.5rem;
         cursor: pointer;
+        margin-left: 0.5rem;
       }
       span.bookedNow {
         background-color: ${(props) => props.theme.colors.tertiary};

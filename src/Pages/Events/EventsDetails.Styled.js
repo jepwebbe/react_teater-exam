@@ -7,8 +7,15 @@ export const EventsDetailsStyled = styled.section`
     border: 15px solid ${(props) => props.theme.colors.secondary};
     aspect-ratio: 1150 / 684;
     overflow: hidden;
+    position: relative;
     img {
       transform: scale(1.2);
+    }
+    svg {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: ${props => props.theme.colors.secondary};
     }
   }
   // Event date and price and stage

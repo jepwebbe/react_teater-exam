@@ -47,13 +47,13 @@ export const MyPageStyled = styled.section`
   table th:last-child, table tr td:last-of-type {
     text-align: right;
   }
-  tr td:last-of-type svg:last-of-type {
-    color: red;
+  tr td:last-of-type svg.delete {
+    color: #B10C0C;
     font-size: 1.7rem;
     transform: unset;
   }
-  tr td:last-of-type svg:first-of-type {
-    color: green;
+ tr td:last-of-type svg.edit {
+    color: #048904;
     font-size: 1.4rem;
     transform: unset;
   }

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CTAButton from "../../Components/Partials/CTAButton";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ChooseOrderStyled } from "./ChooseOrder.Styled";
-import ContactInfo from "./ContactInfo";
 import { ContactInfoStyled } from "./ContactInfo.Styled";
 import { useOrderStore } from "./useOrderStore";
 
@@ -12,12 +11,14 @@ const ChooseOrder = () => {
   const { id } = useParams();
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
-  const { setOrder, OrderInfo } = useOrderStore();
+  const { setOrder } = useOrderStore();
   const [formErrors, setFormErrors] = useState({});
 
   const navigate = useNavigate();
+
+  // Updates the state whenever anything is written in the input field
   const [formData, setFormData] = useState({
-    event_id: event.item?.id,
+    event_id: "",
     firstname: "",
     lastname: "",
     email: "",
@@ -26,29 +27,38 @@ const ChooseOrder = () => {
     city: "",
     seats: [],
   });
-  // Updates the state whenever anything is written in the input field
   const [isValid, setIsValid] = useState(true);
 
+  // Update the formData with the id from the fetched event
+  useEffect(() => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      event_id: event.item?.id,
+    }));
+  }, [event]);
+  
+  // function to handle the seat choice
   const handleSeatClick = (event, seat) => {
     event.currentTarget.classList.toggle("bookedNow");
-    // Check to se if the seat is already in the OrderInfo
-    const index = OrderInfo.seats.indexOf(seat);
+    // Check to see if the seat is already in the formData
+    const index = formData.seats.indexOf(seat);
     if (index === -1) {
       // If it is not, add it
-      setOrder({
-        ...OrderInfo,
-        seats: [...OrderInfo.seats, seat],
+      setFormData({
+        ...formData,
+        seats: [...formData.seats, seat],
       });
     } else {
       // If it is, remove it, creating new array and removing by id
-      setOrder({
-        ...OrderInfo,
-        seats: OrderInfo.seats.filter((id) => id !== seat),
+      setFormData({
+        ...formData,
+        seats: formData.seats.filter((id) => id !== seat),
       });
     }
+    console.log("formData", formData);
   };
 
-  // Contactform
+  // Contactform function that sets the formData on a change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
@@ -57,6 +67,7 @@ const ChooseOrder = () => {
         [name]: value,
       };
     });
+    // Regex chekcs if the email is valid or not acc. to pattern
     const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     if (name == "email") {
       if (!emailRegex.test(value)) {
@@ -66,102 +77,134 @@ const ChooseOrder = () => {
       }
     }
   };
+
+  // The submit function checks if email is valid, throws error if not
+  // Else checks that required is not empty
+  // finally sets the zustand from the formData and redirects
   const handleSubmit = () => {
     if (!isValid) {
       setFormErrors({
-        message: 'Indtast venligst en gyldig email',
-      })
+        message: "Indtast venligst en gyldig email",
+      });
       return;
     }
     const { firstname, lastname, email, address, zipcode, city } = formData;
     if (!firstname || !lastname || !email || !address || !zipcode || !city) {
       setFormErrors({
-        message: 'Udfyld venligst alle felter',
+        message: "Udfyld venligst alle felter",
       });
       return;
     }
     setOrder(formData);
     navigate(`/events/${event.item.id}/godkend`);
   };
+
   return (
     <PageTwo title={`Køb billet til ${event.item?.title}`}>
       <ChooseOrderStyled>
         {event.item ? (
           <>
             <div>
-              <div>
-                <img
-                  src={event.item.image}
-                  alt={`Et billede fra forestillingen ${event.item.title}`}
-                />
-              </div>
-              <div>
-                <h2>Køb billet</h2>
+              <div className="imageCard">
                 <div>
-                  <p>{event.item.title}</p>
-                  <p>
-                    {event.item.stage_name} {event.item.startdate}
-                    {event.item.starttime}
-                  </p>
+                  <img
+                    src={event.item.image}
+                    alt={`Et billede fra forestillingen ${event.item.title}`}
+                  />
                 </div>
-                <ContactInfoStyled onSubmit={handleSubmit}>
+                <div>
+                  <h2>Køb billet</h2>
                   <div>
-                    <input
-                      onChange={handleChange}
-                      type="text"
-                      name="firstname"
-                      value={formData.firstname}
-                      placeholder="Fornavn"
-                      maxLength="80"
-                      required
-                    />
-
-                    <input
-                      onChange={handleChange}
-                      type="text"
-                      name="lastname"
-                      value={formData.lastname}
-                      placeholder="Efternavn"
-                      maxLength="80"
-                      required
-                    />{" "}
-                    <input
-                      onChange={handleChange}
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      placeholder="Vejnavn & nr"
-                      required
-                    />
-                    <div className="address">
-                      <input
-                        onChange={handleChange}
-                        type="number"
-                        name="zipcode"
-                        value={formData.zipcode}
-                        placeholder="Postnummer"
-                        required
-                      />
-                      <input
-                        onChange={handleChange}
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        placeholder="By"
-                        required
-                      />
-                    </div>
-                    <input
-                      onChange={handleChange}
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      placeholder="Emailadresse"
-                      required
-                    />
-                    {formErrors && <p>{formErrors.message}</p>}
+                    <h3>{event.item.title.toUpperCase()}</h3>
+                    <p>
+                      {event.item.stage_name.toUpperCase()}{" "}
+                      {event.item.startdate} KL.
+                      {event.item.starttime}
+                    </p>
                   </div>
-                </ContactInfoStyled>
+                  <ContactInfoStyled onSubmit={handleSubmit}>
+                    <div>
+                      <div>
+                        <label htmlFor="firstname">FORNAVN</label>
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          name="firstname"
+                          value={formData.firstname}
+                          placeholder="Fornavn"
+                          maxLength="80"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="lastname">EFTERNAVN</label>
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          name="lastname"
+                          value={formData.lastname}
+                          placeholder="Efternavn"
+                          maxLength="80"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="adress">VEJNAVN & NR</label>
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          name="address"
+                          value={formData.address}
+                          placeholder="Vejnavn & nr"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="zipcode">POSTNR & BY</label>
+                        <input
+                          onChange={handleChange}
+                          type="number"
+                          name="zipcode"
+                          value={formData.zipcode}
+                          placeholder="Postnummer"
+                          required
+                        />
+                        <input
+                          onChange={handleChange}
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          placeholder="By"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email">EMAIL</label>
+                        <input
+                          onChange={handleChange}
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          placeholder="Emailadresse"
+                          required
+                        />
+                      </div>
+                      {formErrors && <p>{formErrors.message}</p>}
+                    </div>
+                  </ContactInfoStyled>
+                  <p>ALLE FELTER SKAL UDFYLDES</p>
+                  <div>
+                    <p>
+                      ANTAL <span>-</span>
+                      <span>{formData.seats.length}</span>
+                      <span>+</span>
+                    </p>
+                    <div>
+                      <p>PRIS {formData.seats.length * event.item.price} DKK</p>
+                      <p>PRIS INKL. MOMS</p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div>
                 <p>{event.item.stage_name}</p>

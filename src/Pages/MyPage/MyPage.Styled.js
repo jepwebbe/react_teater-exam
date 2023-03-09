@@ -57,4 +57,5 @@ export const MyPageStyled = styled.section`
     font-size: 1.4rem;
     transform: unset;
   }
+
 `;

@@ -13,21 +13,19 @@ import AddReview from "./Review/AddReview";
 import { BsCardText } from "react-icons/bs";
 
 const EventsDetails = () => {
-  const { loggedIn } = useLoginStore();
-
   // Destructuring of hooks
   const { id } = useParams();
+  const { loggedIn } = useLoginStore();
 
   // Setting up variables and setter functions for useState
   const [eventDetails, setEventDetails] = useState({});
   const [reviews, setReviews] = useState([]);
-
   const [reviewSent, setReviewSent] = useState(false);
-
-  console.log("reviews", reviews);
 
   // fetch the event from the id in the url using useParams
   // and sets result to state variables
+  // rerenders when id or reviewState state changes
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -38,6 +36,7 @@ const EventsDetails = () => {
       }
     };
     getData();
+    // Gets the reviews from the event id from useParams and sets it to state
     const getReviews = async () => {
       try {
         const result = await appService.Get(`reviews?event_id=${id}`);

@@ -24,6 +24,9 @@ export const NavStyled = styled.nav`
       p {
         margin: 0;
       }
+      button {
+        cursor: pointer;
+      }
       > div {
         position: absolute;
         top: 100%;

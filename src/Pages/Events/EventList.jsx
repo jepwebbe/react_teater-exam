@@ -12,7 +12,6 @@ const EventList = () => {
   const [events, setEvents] = useState([]);
   const [sortMe, setSortMe] = useState("");
 
-  console.log("events", events);
   // fetch the house from the id in the url using useParams
   // and sets result to state variable
   useEffect(() => {

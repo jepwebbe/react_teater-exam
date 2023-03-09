@@ -12,7 +12,8 @@ const ConfirmOrder = () => {
   // destructuring of hooks
   const { id } = useParams();
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
-  const { state: bookings } = useGetApiDataFromEndpoint("reservations");
+  const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
+
   const { OrderInfo } = useOrderStore();
   console.log("orderinfo", OrderInfo);
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const ConfirmOrder = () => {
       }
     };
     buy();
-    console.log("bookings", bookings);
   };
 
   return (
@@ -47,9 +47,17 @@ const ConfirmOrder = () => {
               <h2>Godkend ordre</h2>
               <div>
                 <h3>PRODUKTER:</h3>
-                <p><span className="details">FORESTILLING</span>: {event.item.title}</p>
-                <p><span className="details">SCENE</span>: {event.item.stage_name}</p>
-                <p><span className="details">DATO</span>:</p>
+                <p>
+                  <span className="details">FORESTILLING</span>:{" "}
+                  {event.item.title}
+                </p>
+                <p>
+                  <span className="details">SCENE</span>:{" "}
+                  {event.item.stage_name}
+                </p>
+                <p>
+                  <span className="details">DATO</span>:
+                </p>
               </div>
               <table>
                 <thead>
@@ -60,13 +68,18 @@ const ConfirmOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {OrderInfo.seats.map((seat, i) => (
-                    <tr key={i}>
-                      <td>{seat.id}</td>
-                      <td>{seat.line}</td>
-                      <td>{event.item.price} DKK</td>
-                    </tr>
-                  ))}
+                  {OrderInfo.seats.map((seat, i) => {
+                    const matchingSeat = seats.items.find(
+                      (item) => item.id === seat
+                    );
+                    return (
+                      <tr key={i}>
+                        <td>{matchingSeat ? matchingSeat.number : ""}</td>
+                        <td>{matchingSeat ? matchingSeat.line : ""}</td>
+                        <td>{event.item.price} DKK</td>
+                      </tr>
+                    );
+                  })}
                   <tr>
                     <td>PRIS I ALT</td>
                     <td></td>
@@ -87,7 +100,16 @@ const ConfirmOrder = () => {
                     {OrderInfo.zipcode.toUpperCase()}{" "}
                     {OrderInfo.city.toUpperCase()}
                   </p>
-                  <p>EMAIL: <a href={`mailto:${OrderInfo.email}`} target="_blank" rel="noopener noreferrer">{OrderInfo.email.toUpperCase()}</a></p>
+                  <p>
+                    EMAIL:{" "}
+                    <a
+                      href={`mailto:${OrderInfo.email}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {OrderInfo.email.toUpperCase()}
+                    </a>
+                  </p>
                 </div>
                 <p>BILLETTERNE SENDES ELEKTRONISK TIL DIN EMAIL</p>
               </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import appService from "../Components/App/Appservices/AppService";
 // takes endpoint and a path key to fetch a directory
-const useGetApiDataFromEndpoint = (endpoint, key) => {
+const useGetApiDataFromEndpoint = (endpoint, key, refresh) => {
   // state holds the information later on fetched with axios through appService
   const [state, setState] = useState([]);
   // using useEffect to fetch data from the props passed to the component, so it only renders when dep. array changes
@@ -19,7 +19,7 @@ const useGetApiDataFromEndpoint = (endpoint, key) => {
       }
     };
     renderData();
-  }, [endpoint, key]);
+  }, [endpoint, key, refresh]);
   // returns the state
   return { state };
 };

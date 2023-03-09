@@ -51,6 +51,7 @@ export const MyPageStyled = styled.section`
     color: #B10C0C;
     font-size: 1.7rem;
     transform: unset;
+    cursor: pointer;
   }
  tr td:last-of-type svg.edit {
     color: #048904;

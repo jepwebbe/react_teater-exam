@@ -15,7 +15,10 @@ export const EventsDetailsStyled = styled.section`
       position: absolute;
       top: 1rem;
       right: 1rem;
-      color: ${props => props.theme.colors.secondary};
+      color: ${props => props.theme.colors.primary};
+      cursor: pointer;
+      width: 2rem;
+      height: 2rem;
     }
   }
   // Event date and price and stage

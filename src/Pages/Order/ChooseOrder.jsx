@@ -210,18 +210,64 @@ const ChooseOrder = () => {
                 </div>
               </div>
               <div>
-                <p>{event.item.stage_name}</p>
-                <div>
+                <p className="stage">{event.item.stage_name.toUpperCase()}</p>
+                <div className="venue">
                   {seats.items ? (
                     seats.items.map((seat, i) => (
                       <React.Fragment key={i}>
                         {seat.is_reserved == 0 ? (
                           <span
-                            className="free"
+                            className={`free ${
+                              seat.line === "1"
+                                ? "row-one"
+                                : seat.line === "2"
+                                ? "row-two"
+                                : seat.line === "3"
+                                ? "row-three"
+                                : seat.line === "4"
+                                ? "row-four"
+                                : seat.line === "5"
+                                ? "row-five"
+                                : seat.line === "6"
+                                ? "row-six"
+                                : seat.line === "7"
+                                ? "row-seven"
+                                : seat.line === "8"
+                                ? "row-eight"
+                                : seat.line === "9"
+                                ? "row-nine"
+                                : seat.line === "10"
+                                ? "row-ten"
+                                : ""
+                            }`}
                             onClick={(event) => handleSeatClick(event, seat.id)}
                           ></span>
                         ) : (
-                          <span className="booked"></span>
+                          <span
+                            className={`booked ${
+                              seat.line === "1"
+                                ? "row-one"
+                                : seat.line === "2"
+                                ? "row-two"
+                                : seat.line === "3"
+                                ? "row-three"
+                                : seat.line === "4"
+                                ? "row-four"
+                                : seat.line === "5"
+                                ? "row-five"
+                                : seat.line === "6"
+                                ? "row-six"
+                                : seat.line === "7"
+                                ? "row-seven"
+                                : seat.line === "8"
+                                ? "row-eight"
+                                : seat.line === "9"
+                                ? "row-nine"
+                                : seat.line === "10"
+                                ? "row-ten"
+                                : ""
+                            }`}
+                          ></span>
                         )}
                       </React.Fragment>
                     ))
@@ -229,6 +275,8 @@ const ChooseOrder = () => {
                     <p>Indlæser</p>
                   )}
                 </div>
+                <p className="choose-text">VÆLG SIDDEPLADSER</p>
+
               </div>
             </div>
             <div onClick={handleSubmit}>

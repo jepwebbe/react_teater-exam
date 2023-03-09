@@ -10,11 +10,13 @@ export const ChooseOrderStyled = styled.section`
       max-height: 700px;
       display: flex;
       column-gap: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed ${(props) => props.theme.colors.secondary};
       // imagewrapper
       > div:nth-child(1) {
         aspect-ratio: 1 / 2;
         overflow: hidden;
-        border: 10px solid ${props => props.theme.colors.secondary};
+        border: 10px solid ${(props) => props.theme.colors.secondary};
         flex: 3;
         img {
           transform: scale(4);
@@ -45,21 +47,20 @@ export const ChooseOrderStyled = styled.section`
             text-align: right;
           }
         }
-        > form >div {
-          >div {
+        > form > div {
+          > div {
             display: grid;
             grid-template-columns: 1.5fr 5fr;
             margin-top: 0.5rem;
             input {
-              color: ${props => props.theme.colors.primary};
+              color: ${(props) => props.theme.colors.primary};
               line-height: 2;
               border: 1px solid #707070;
             }
           }
-          >div:nth-child(4) {
+          > div:nth-child(4) {
             grid-template-columns: 1.5fr 2.5fr 2.5fr;
           }
-
         }
         > p {
           text-align: right;
@@ -119,6 +120,25 @@ export const ChooseOrderStyled = styled.section`
     }
     // ticket selection
     > div:nth-child(2) {
+      margin: 2rem;
+      p.stage {
+        background-color: ${(props) => props.theme.colors.secondary};
+        text-align: center;
+        line-height: 2;
+        color: white;
+        margin-bottom: 2rem;
+        font-weight: bold;
+      }
+      div.venue {
+        display: grid;
+        grid-template-rows: repeat(auto, 1fr);
+        justify-content: space-between;
+        gap: 0.5rem;
+
+      }
+      p.choose-text {
+        text-align: center;
+      }
       span {
         border-radius: 50%;
         border: 1px solid ${(props) => props.theme.colors.secondary};
@@ -126,13 +146,43 @@ export const ChooseOrderStyled = styled.section`
         width: 4rem;
         height: 4rem;
         cursor: pointer;
-        margin-right: 1rem;
       }
       span.bookedNow {
         background-color: ${(props) => props.theme.colors.tertiary};
       }
       span.booked {
         background-color: ${(props) => props.theme.colors.secondary};
+      }
+      span.row-three {
+        grid-row: 3;
+      }
+
+      span.row-four {
+        grid-row: 4;
+      }
+
+      span.row-five {
+        grid-row: 5;
+      }
+
+      span.row-six {
+        grid-row: 6;
+      }
+
+      span.row-seven {
+        grid-row: 7;
+      }
+
+      span.row-eight {
+        grid-row: 8;
+      }
+
+      span.row-nine {
+        grid-row: 9;
+      }
+
+      span.row-ten {
+        grid-row: 10;
       }
     }
   }

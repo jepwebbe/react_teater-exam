@@ -25,6 +25,7 @@ const Router = () => {
       <Route path="/skuespillere/:id" element={<ActorsDetails />} />
       <Route path="/resultat" element={<SearchResult />} />
       <Route path="/minside" element={<MyPage />} />
+      <Route path="/tak" element={<Thanks />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

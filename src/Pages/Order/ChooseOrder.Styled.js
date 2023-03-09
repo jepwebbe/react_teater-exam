@@ -9,7 +9,6 @@ export const ChooseOrderStyled = styled.section`
     > div:nth-child(1) {
       max-height: 700px;
       display: flex;
-      column-gap: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px dashed ${(props) => props.theme.colors.secondary};
       // imagewrapper

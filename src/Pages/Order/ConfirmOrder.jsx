@@ -70,7 +70,7 @@ const ConfirmOrder = () => {
                 </thead>
                 <tbody>
                   {OrderInfo?.seats?.map((seat, i) => {
-                    const matchingSeat = seats.items.find(
+                    const matchingSeat = seats?.items?.find(
                       (item) => item.id === seat
                     );
                     return (

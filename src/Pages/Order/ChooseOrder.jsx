@@ -101,6 +101,12 @@ const ChooseOrder = () => {
       });
       return;
     }
+    if (formData.seats.length < 1){
+      setFormErrors({
+        message: "Vælg venglist nogle siddepladser",
+      });
+      return;
+    }
     setOrder(formData);
     navigate(`/events/${event.item.id}/godkend`);
   };

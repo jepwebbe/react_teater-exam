@@ -7,16 +7,22 @@ import { MyPageStyled } from "./MyPage.Styled";
 import { FaTicketAlt, FaHeart, FaStar, FaPen } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import appService from "../../Components/App/Appservices/AppService";
+import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 
 const MyPage = () => {
   const { loggedIn, userInfo } = useLoginStore();
+
+  const { state: events } = useGetApiDataFromEndpoint("events", "items");
+  const [favorites, setFavorites] = useState([]);
+  const [deleteCount, setDeleteCount] = useState(true);
+
+  // uses the custom hook to fetch bookings and review
+  // uses deleteCount in the dependency array
   const { state: allBookings } = useGetApiDataFromEndpoint(
     "reservations",
-    "items"
+    "items",
+    deleteCount
   );
-  const [favorites, setFavorites] = useState([]);
-  const [deleteCount, setDeleteCount] = useState(0);
-
   const { state: allReviews } = useGetApiDataFromEndpoint(
     "reviews",
     "items",
@@ -30,6 +36,8 @@ const MyPage = () => {
     allReviews.filter(
       (item) => parseInt(item.user_id, 10) === userInfo.user_id
     );
+
+  // fetches the favorites, sets deleteCount in dep. array
   useEffect(() => {
     const getData = async () => {
       try {
@@ -41,13 +49,14 @@ const MyPage = () => {
     };
     getData();
   }, [deleteCount]);
-  // removes favorite/review onClick, takes the id as a parameter
+
+  // removes favorite/review/booking onClick, takes the id as a parameter
   // subtracts from deleteCount to ensure a rerender of the fetched items
   const deleteFavorite = (eventid) => {
     const remove = async () => {
       try {
         await appService.Remove("favorites", eventid);
-        setDeleteCount(-1);
+        setDeleteCount(!deleteCount);
       } catch (error) {
         console.error(error);
       }
@@ -58,7 +67,18 @@ const MyPage = () => {
     const remove = async () => {
       try {
         await appService.Remove("reviews", eventid);
-        setDeleteCount(-1);
+        setDeleteCount(!deleteCount);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    remove();
+  };
+  const deleteBooking = (bookingid) => {
+    const remove = async () => {
+      try {
+        await appService.Remove("reservations", bookingid);
+        setDeleteCount(!deleteCount);
       } catch (error) {
         console.error(error);
       }
@@ -92,18 +112,30 @@ const MyPage = () => {
             </thead>
             <tbody>
               {allBookings &&
-                allBookings.map((booking, i) => (
-                  <tr key={i}>
-                    <td>{booking.startdate}</td>
-                    <td>{booking.title}</td>
-                    <td>{booking.stage_name}</td>
-                    <td>{booking.amount}</td>
-                    <td>{booking.price}</td>
-                    <td>
-                      <TiDeleteOutline />
-                    </td>
-                  </tr>
-                ))}
+                allBookings.map((booking, i) => {
+                  const matchingEvent = events.find(
+                    (event) => event.id === booking.event_id
+                  );
+                  return (
+                    <tr key={i}>
+                      <td>
+                        {matchingEvent?.startdate} {matchingEvent?.starttime}
+                      </td>
+                      <td>{matchingEvent ? matchingEvent.title : ""}</td>
+                      <td>{matchingEvent ? matchingEvent.stage_name : ""}</td>
+                      <BookingDetails
+                        bookingId={booking.id}
+                        price={matchingEvent?.price}
+                      />
+                      <td>
+                        <TiDeleteOutline
+                          className="delete"
+                          onClick={() => deleteBooking(booking.id)}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </article>
@@ -197,3 +229,19 @@ const MyPage = () => {
 };
 
 export default MyPage;
+
+const BookingDetails = ({ bookingId, price }) => {
+  const { state: bookingDetails } = useGetByIdApiDataFromEndpoint(
+    "reservations",
+    bookingId,
+    "item"
+  );
+  console.log(bookingDetails);
+
+  return (
+    <>
+      <td>{bookingDetails?.reservation.reservationlines.length}</td>
+      <td>{bookingDetails?.reservation.reservationlines.length * price}.00</td>
+    </>
+  );
+};

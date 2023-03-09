@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
+import useGetApiDataFromEndpoint from "../../Hooks/useGetApiDataFromEndpoint";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
 import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import { ConfirmOrderStyled } from "./ConfirmOrder.Styled";
@@ -22,10 +23,13 @@ const ConfirmOrder = () => {
   const submitOrder = () => {
     const buy = async () => {
       try {
-        await appService.Create("reservations", { OrderInfo });
+        await appService.Create("reservations", {
+          OrderInfo,
+        });
       } catch (error) {
         console.error(error);
       }
+      navigate("/tak")
     };
     buy();
   };
@@ -66,7 +70,7 @@ const ConfirmOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {OrderInfo.seats.map((seat, i) => {
+                  {OrderInfo?.seats?.map((seat, i) => {
                     const matchingSeat = seats.items.find(
                       (item) => item.id === seat
                     );
@@ -124,7 +128,7 @@ const ConfirmOrder = () => {
               btnText="TILBAGE"
             />
           </div>
-          <div onClick={() => submitOrder()}>
+          <div onClick={submitOrder}>
             <CTAButton
               width="1rem"
               bgColor={(props) => props.theme.colors.secondary}

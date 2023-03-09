@@ -22,6 +22,8 @@ const EventsDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
   const [reviews, setReviews] = useState([]);
   const [reviewSent, setReviewSent] = useState(false);
+  console.log("reviewsent", reviewSent)
+
   // favoritesCount only used to rerender fetch of favorites
   // favorites used to hold api data
   const [favoritesCount, setFavoritesCount] = useState(0);
@@ -203,13 +205,20 @@ const EventsDetails = () => {
               <AddReview
                 eventId={eventDetails.item.id}
                 setReviewSent={setReviewSent}
+                reviewSent={reviewSent}
               />
             ) : (
               <div className="login">
                 <div>
-                  <h4>
-                    <BsCardText /> Skriv en anmeldelse
+                  {reviewSent ?
+                  <h4 onClick={() => setReviewSent(false)}>
+                    <BsCardText /> Skriv en banmeldelse
                   </h4>
+                  :
+                  <h4 >
+                  <BsCardText /> Skriv en aanmeldelse
+                </h4>
+            }
                   <p>Du skal være logget ind for at skrive en anmeldelse</p>
                 </div>
                 <Login />

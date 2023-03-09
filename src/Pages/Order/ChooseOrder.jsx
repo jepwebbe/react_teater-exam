@@ -11,7 +11,7 @@ const ChooseOrder = () => {
   const { id } = useParams();
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
-  const { setOrder } = useOrderStore();
+  const { setOrder, OrderInfo } = useOrderStore();
   const [formErrors, setFormErrors] = useState({});
 
   const navigate = useNavigate();
@@ -31,12 +31,15 @@ const ChooseOrder = () => {
 
   // Update the formData with the id from the fetched event
   useEffect(() => {
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       event_id: event.item?.id,
     }));
+    if (formData.event_id === OrderInfo.event_id) {
+      setFormData(OrderInfo);
+    }
   }, [event]);
-  
+
   // function to handle the seat choice
   const handleSeatClick = (event, seat) => {
     event.currentTarget.classList.toggle("bookedNow");

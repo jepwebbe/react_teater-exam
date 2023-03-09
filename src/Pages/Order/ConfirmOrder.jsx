@@ -9,9 +9,10 @@ import { ConfirmOrderStyled } from "./ConfirmOrder.Styled";
 import { useOrderStore } from "./useOrderStore";
 
 const ConfirmOrder = () => {
+  // destructuring of hooks
   const { id } = useParams();
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
-  const {state: bookings } = useGetApiDataFromEndpoint("reservations")
+  const { state: bookings } = useGetApiDataFromEndpoint("reservations");
   const { OrderInfo } = useOrderStore();
   console.log("orderinfo", OrderInfo);
   const navigate = useNavigate();
@@ -28,10 +29,8 @@ const ConfirmOrder = () => {
       }
     };
     buy();
-    console.log("bookings", bookings)
-
+    console.log("bookings", bookings);
   };
-
 
   return (
     <PageTwo title="Godkend dit køb">
@@ -39,15 +38,18 @@ const ConfirmOrder = () => {
         {event.item ? (
           <div>
             <div>
-              <img src={event.item.image} alt={`Et billede fra forestillingen ${event.item.title}`} />
+              <img
+                src={event.item.image}
+                alt={`Et billede fra forestillingen ${event.item.title}`}
+              />
             </div>
             <div>
               <h2>Godkend ordre</h2>
               <div>
                 <h3>PRODUKTER:</h3>
-                <p>FORESTILLING: {event.item.title}</p>
-                <p>SCENE: {event.item.stage_name}</p>
-                <p>DATO:</p>
+                <p><span className="details">FORESTILLING</span>: {event.item.title}</p>
+                <p><span className="details">SCENE</span>: {event.item.stage_name}</p>
+                <p><span className="details">DATO</span>:</p>
               </div>
               <table>
                 <thead>
@@ -62,14 +64,19 @@ const ConfirmOrder = () => {
                     <tr key={i}>
                       <td>{seat.id}</td>
                       <td>{seat.line}</td>
-                      <td>{event.item.price}</td>
+                      <td>{event.item.price} DKK</td>
                     </tr>
                   ))}
+                  <tr>
+                    <td>PRIS I ALT</td>
+                    <td></td>
+                    <td>{event.item.price * OrderInfo.seats.length}.00 DKK</td>
+                  </tr>
                 </tbody>
               </table>
               <p>PRIS INKL. MOMS & BILLETGEBYR</p>
               <div>
-                <h3>KUNDE</h3>
+                <h4>KUNDE:</h4>
                 <div>
                   <p>
                     {OrderInfo.firstname.toUpperCase()}{" "}
@@ -80,7 +87,7 @@ const ConfirmOrder = () => {
                     {OrderInfo.zipcode.toUpperCase()}{" "}
                     {OrderInfo.city.toUpperCase()}
                   </p>
-                  <p>EMAIL {OrderInfo.email.toUpperCase()}</p>
+                  <p>EMAIL: <a href={`mailto:${OrderInfo.email}`} target="_blank" rel="noopener noreferrer">{OrderInfo.email.toUpperCase()}</a></p>
                 </div>
                 <p>BILLETTERNE SENDES ELEKTRONISK TIL DIN EMAIL</p>
               </div>
@@ -89,20 +96,22 @@ const ConfirmOrder = () => {
         ) : (
           <p>Indlæser</p>
         )}
-        <CTAButton
-          width="1rem"
-          bgColor={(props) => props.theme.colors.secondary}
-          btnText="TILBAGE"
-          onClick={goBack}
-        />
-        
-          <div onClick={() => submitOrder()}  >
-              <CTAButton
-                width="1rem"
-                bgColor={(props) => props.theme.colors.secondary}
-                btnText="GODKEND BESTILLING"
-                        />
+        <div>
+          <div onClick={goBack}>
+            <CTAButton
+              width="1rem"
+              bgColor={(props) => props.theme.colors.secondary}
+              btnText="TILBAGE"
+            />
           </div>
+          <div onClick={() => submitOrder()}>
+            <CTAButton
+              width="1rem"
+              bgColor={(props) => props.theme.colors.secondary}
+              btnText="GODKEND BESTILLING"
+            />
+          </div>
+        </div>
       </ConfirmOrderStyled>
     </PageTwo>
   );

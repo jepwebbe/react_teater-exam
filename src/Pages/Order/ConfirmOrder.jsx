@@ -20,7 +20,7 @@ const ConfirmOrder = () => {
     const buy = async () => {
       try {
         await appService.Create("reservations", {
-          event_id: OrderInfo.event_id,
+          event_id: id,
           firstname: OrderInfo.firstname,
           lastname: OrderInfo.lastname,
           address: OrderInfo.address,
@@ -45,7 +45,6 @@ const ConfirmOrder = () => {
     };
     buy();
   };
-
   return (
     <PageTwo title="Godkend dit køb">
       <ConfirmOrderStyled>

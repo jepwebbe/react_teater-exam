@@ -31,8 +31,7 @@ const ChooseOrder = () => {
     city: "",
     seats: [],
   });
-  console.log(loggedIn)
-  console.log("usermail", userInfo.email)
+
   const [isValid, setIsValid] = useState(true);
 
   // Update the formData with the id from the fetched event
@@ -44,7 +43,8 @@ const ChooseOrder = () => {
     if (formData.event_id === OrderInfo.event_id) {
       setFormData(OrderInfo);
     }
-  }, [event, OrderInfo, formData.event_id]);
+
+  }, [event, OrderInfo, formData.event_id ]);
 
   // Contactform function that sets the formData on a change
   const handleChange = (event) => {

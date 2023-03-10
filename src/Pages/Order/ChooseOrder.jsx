@@ -23,8 +23,8 @@ const ChooseOrder = () => {
   // Updates the state whenever anything is written in the input field
   const [formData, setFormData] = useState({
     event_id: id,
-    firstname: "",
-    lastname: "",
+    firstname: loggedIn ? userInfo.firstname : "",
+    lastname: loggedIn ? userInfo.lastname : "",
     email: loggedIn ? userInfo.email : "",
     address: "",
     zipcode: "",
@@ -137,7 +137,6 @@ const ChooseOrder = () => {
     setOrder(formData);
     navigate(`/events/${event.item.id}/godkend`);
   };
-
   return (
     <PageTwo title={`Køb billet til ${event.item?.title}`}>
       <ChooseOrderStyled>

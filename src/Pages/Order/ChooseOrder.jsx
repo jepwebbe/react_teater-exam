@@ -22,7 +22,7 @@ const ChooseOrder = () => {
 
   // Updates the state whenever anything is written in the input field
   const [formData, setFormData] = useState({
-    event_id: "",
+    event_id: id,
     firstname: "",
     lastname: "",
     email: loggedIn ? userInfo.email : "",
@@ -36,10 +36,6 @@ const ChooseOrder = () => {
 
   // Update the formData with the id from the fetched event
   useEffect(() => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      event_id: event.item?.id,
-    }));
     if (formData.event_id === OrderInfo.event_id) {
       setFormData(OrderInfo);
     }

@@ -69,12 +69,12 @@ const EventsDetails = () => {
       getData();
     }
   }, [loggedIn, favoritesCount]);
-    // posts a favorite onClick, takes the id as a parameter
+  // posts a favorite onClick, takes the id as a parameter
   // adds to faveoritesCount to ensure a rerender of the favorite fetch
   const postFavorite = (eventid) => {
     const add = async () => {
       try {
-        await appService.Create("favorites", { event_id:eventid });
+        await appService.Create("favorites", { event_id: eventid });
         setFavoritesCount(+1);
       } catch (error) {
         console.error(error);
@@ -87,7 +87,7 @@ const EventsDetails = () => {
   const deleteFavorite = (eventid) => {
     const remove = async () => {
       try {
-        await appService.Remove("favorites", eventid );
+        await appService.Remove("favorites", eventid);
         setFavoritesCount(-1);
       } catch (error) {
         console.error(error);
@@ -112,7 +112,9 @@ const EventsDetails = () => {
                 alt={`Et billede fra forestillingen ${eventDetails.item.title}`}
               />
               {loggedIn ? (
-                favorites?.find((item) => item.event_id === eventDetails.item.id) ? (
+                favorites?.find(
+                  (item) => item.event_id === eventDetails.item.id
+                ) ? (
                   <AiFillHeart
                     onClick={() => deleteFavorite(eventDetails.item.id)}
                   />
@@ -176,19 +178,31 @@ const EventsDetails = () => {
                 {reviews?.map((review, ix) => (
                   <li key={ix}>
                     <div>
-                      {/* This is coauthored by chatGPT */}
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <span
-                          key={i}
-                          style={{
-                            color: "#B08058",
-                            textShadow: "0 0 1px #B08058, 0 0 2px #B08058",
-                            padding: "0 2px",
-                          }}
-                        >
-                          {i < parseInt(review.num_stars) ? "\u2605" : "\u2606"}
-                        </span>
-                      ))}
+                      {/*  This code creates 2 arrays, writes a filled star for the number in the review.num_stars
+                    fills out the rest with an empty star by substraction
+                    and it uses the html entity for star, */}
+                      {Array.from(
+                        { length: parseInt(review.num_stars) },
+                        (_, i) => (
+                          <span
+                            key={i}
+                            style={{ color: "#D39D5B", borderColor: "#D39D5B" }}
+                          >
+                            &#9733;
+                          </span>
+                        )
+                      )}
+                      {Array.from(
+                        { length: 5 - parseInt(review.num_stars) },
+                        (_, i) => (
+                          <span
+                            key={i}
+                            style={{ color: "#D39D5B", borderColor: "#D39D5B" }}
+                          >
+                            &#9734;
+                          </span>
+                        )
+                      )}
                     </div>
                     <p>{review.created}</p>
                     <p>
@@ -209,15 +223,15 @@ const EventsDetails = () => {
             ) : (
               <div className="login">
                 <div>
-                  {reviewSent ?
-                  <h4 onClick={() => setReviewSent(false)}>
-                    <BsCardText /> Skriv en banmeldelse
-                  </h4>
-                  :
-                  <h4 >
-                  <BsCardText /> Skriv en aanmeldelse
-                </h4>
-            }
+                  {reviewSent ? (
+                    <h4 onClick={() => setReviewSent(false)}>
+                      <BsCardText /> Skriv en banmeldelse
+                    </h4>
+                  ) : (
+                    <h4>
+                      <BsCardText /> Skriv en aanmeldelse
+                    </h4>
+                  )}
                   <p>Du skal være logget ind for at skrive en anmeldelse</p>
                 </div>
                 <Login />

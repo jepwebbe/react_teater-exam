@@ -185,14 +185,18 @@ const MyPage = () => {
                   <tr key={i}>
                     <td>{review.event_title}</td>
                     <td>{review.subject}</td>
-                    {/* This code below was cowritten by chatGPT  */}
+                    {/* 
+                    This code creates 2 arrays, writes a filled star for the number in the review.num_stars
+                    fills out the rest with an empty star by substraction
+                    and it uses the html entity for star,
+                     */}
                     <td>
                       {Array.from(
                         { length: parseInt(review.num_stars) },
                         (_, i) => (
                           <span
                             key={i}
-                            style={{ color: "#B08058", borderColor: "#B08058" }}
+                            style={{ color: "#D39D5B", borderColor: "#D39D5B" }}
                           >
                             &#9733;
                           </span>
@@ -203,7 +207,7 @@ const MyPage = () => {
                         (_, i) => (
                           <span
                             key={i}
-                            style={{ color: "#B08058", borderColor: "#B08058" }}
+                            style={{ color: "#D39D5B", borderColor: "#D39D5B" }}
                           >
                             &#9734;
                           </span>
@@ -233,12 +237,19 @@ export default MyPage;
 const BookingDetails = ({ bookingId, price }) => {
   const { state: bookingDetails } = useGetByIdApiDataFromEndpoint(
     "reservations",
-    bookingId,
+    bookingId
   );
   return (
     <>
-      <td>{bookingDetails.reservation && bookingDetails.reservation.reservationlines.length}</td>
-      <td>{bookingDetails.reservation && bookingDetails.reservation.reservationlines.length * price}.00</td>
+      <td>
+        {bookingDetails.reservation &&
+          bookingDetails.reservation.reservationlines.length}
+      </td>
+      <td>
+        {bookingDetails.reservation &&
+          bookingDetails.reservation.reservationlines.length * price}
+        .00
+      </td>
     </>
   );
 };

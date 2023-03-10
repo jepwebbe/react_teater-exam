@@ -87,7 +87,7 @@ export const Nav = () => {
           ) : (
             <NavLink to="/minside">MIN SIDE</NavLink>
           )}
-          <div style={{ display: loginMenu ? "block" : "none" }}>
+          <div id="logMeIn" style={{ display: loginMenu ? "block" : "none" }}>
             <Login forward={true} />
           </div>
         </li>

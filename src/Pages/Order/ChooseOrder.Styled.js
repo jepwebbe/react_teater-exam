@@ -72,7 +72,8 @@ export const ChooseOrderStyled = styled.section`
           justify-content: flex-end;
           margin-top: 3rem;
           > p:first-of-type {
-            button, span {
+            button,
+            span {
               cursor: pointer;
               border: none;
             }
@@ -133,7 +134,6 @@ export const ChooseOrderStyled = styled.section`
         display: grid;
         justify-content: center;
         row-gap: 1rem;
-
       }
       p.choose-text {
         text-align: center;
@@ -152,6 +152,12 @@ export const ChooseOrderStyled = styled.section`
       }
       span.booked {
         background-color: ${(props) => props.theme.colors.secondary};
+      }
+      span.row-one {
+        grid-row: 1;
+      }
+      span.row-two {
+        grid-row: 2;
       }
       span.row-three {
         grid-row: 3;
@@ -183,6 +189,26 @@ export const ChooseOrderStyled = styled.section`
 
       span.row-ten {
         grid-row: 10;
+      }
+    }
+  }
+  >div:last-of-type {
+    margin-left: auto;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.m}) {
+    > div:nth-child(1) {
+      //flexing div
+      > div:nth-child(1) {
+        flex-direction: column;
+        max-height: unset;
+        // imagewrapper
+        > div:nth-child(1) {
+          aspect-ratio: 1.5 /1;
+          img {
+            transform:unset;
+            margin-top: 0;
+          }
+        }
       }
     }
   }

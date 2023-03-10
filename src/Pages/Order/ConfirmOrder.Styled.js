@@ -84,9 +84,25 @@ export const ConfirmOrderStyled = styled.section`
       }
     }
   }
-  >div:nth-child(2) {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
+  > div:nth-child(2) {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.m}) {
+    > div:nth-child(1) {
+      flex-direction: column;
+      // imagewrapper
+      > div:nth-child(1) {
+        aspect-ratio: 1.5 /1;
+        img {
+          transform: unset;
+          margin-top: 0;
+        }
+      }
+      // event and contact info
+      > div:nth-child(2) {
+      }
     }
+  }
 `;

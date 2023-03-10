@@ -22,7 +22,6 @@ const EventsDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
   const [reviews, setReviews] = useState([]);
   const [reviewSent, setReviewSent] = useState(false);
-  console.log("reviewsent", reviewSent)
 
   // favoritesCount only used to rerender fetch of favorites
   // favorites used to hold api data
@@ -123,7 +122,7 @@ const EventsDetails = () => {
                   />
                 )
               ) : (
-                <Link to="/login">
+                <Link to="/minside">
                   <AiOutlineHeart />
                 </Link>
               )}

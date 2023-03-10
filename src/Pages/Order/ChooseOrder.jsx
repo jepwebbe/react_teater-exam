@@ -10,27 +10,29 @@ import { ContactInfoStyled } from "./ContactInfo.Styled";
 import { useOrderStore } from "./useOrderStore";
 
 const ChooseOrder = () => {
+  // Destructuring of hook and setting up state
   const { id } = useParams();
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
   const { setOrder, OrderInfo } = useOrderStore();
   const [formErrors, setFormErrors] = useState({});
   const { loggedIn, userInfo } = useLoginStore();
-
-
   const navigate = useNavigate();
+  const [ renderMe, setRenderMe] = useState(false)
 
   // Updates the state whenever anything is written in the input field
   const [formData, setFormData] = useState({
     event_id: "",
     firstname: "",
     lastname: "",
-    email: loggedIn ? userInfo.email : "" ,
+    email: loggedIn ? userInfo.email : "",
     address: "",
     zipcode: "",
     city: "",
     seats: [],
   });
+  console.log(loggedIn)
+  console.log("usermail", userInfo.email)
   const [isValid, setIsValid] = useState(true);
 
   // Update the formData with the id from the fetched event
@@ -43,26 +45,6 @@ const ChooseOrder = () => {
       setFormData(OrderInfo);
     }
   }, [event, OrderInfo, formData.event_id]);
-
-  // function to handle the seat choice
-  const handleSeatClick = (event, seat) => {
-    event.currentTarget.classList.toggle("bookedNow");
-    // Check to see if the seat is already in the formData
-    const index = formData.seats.indexOf(seat);
-    if (index === -1) {
-      // If it is not, add it
-      setFormData({
-        ...formData,
-        seats: [...formData.seats, seat],
-      });
-    } else {
-      // If it is, remove it, creating new array and removing by id
-      setFormData({
-        ...formData,
-        seats: formData.seats.filter((id) => id !== seat),
-      });
-    }
-  };
 
   // Contactform function that sets the formData on a change
   const handleChange = (event) => {
@@ -84,6 +66,55 @@ const ChooseOrder = () => {
     }
   };
 
+  // Function to handle the seat choice
+  const handleSeatClick = (event, seat) => {
+    event.currentTarget.classList.toggle("bookedNow");
+    // Check to see if the seat is already in the formData
+    const index = formData.seats.indexOf(seat);
+    if (index === -1) {
+      // If it is not, add it
+      setFormData({
+        ...formData,
+        seats: [...formData.seats, seat],
+      });
+    } else {
+      // If it is, remove it, creating new array and removing by id
+      setFormData({
+        ...formData,
+        seats: formData.seats.filter((id) => id !== seat),
+      });
+    }
+    setRenderMe(!renderMe)
+  };
+
+  // function to remove seats from the array
+  const handleRemoveSeat = () => {
+    // remove the last seat from the formData.seats array
+    setFormData((prevFormData) => {
+      const newSeats = [...prevFormData.seats];
+      newSeats.pop();
+      return {
+        ...prevFormData,
+        seats: newSeats,
+      };
+    });
+  };
+
+  // Checks to see if any seats are in the OrderInfo has been selected
+  // By looking by the property data set assigned in the seats map
+  useEffect(() => {
+    const seatElements = document.querySelectorAll(".free");
+    const allSeats = [...formData.seats, ...OrderInfo.seats];
+    const bookedSeats = allSeats.map((seat) => seat);
+    seatElements.forEach((seatElement) => {
+      if (bookedSeats.includes(seatElement.dataset.seat)) {
+        seatElement.classList.add("bookedNow");
+      } else {
+        seatElement.classList.remove("bookedNow");
+      }
+    });
+  }, [OrderInfo, formData, renderMe]);
+
   // The submit function checks if email is valid, throws error if not
   // Else checks that required is not empty
   // finally sets the zustand from the formData and redirects
@@ -101,7 +132,7 @@ const ChooseOrder = () => {
       });
       return;
     }
-    if (formData.seats.length < 1){
+    if (formData.seats.length < 1) {
       setFormErrors({
         message: "Vælg venglist nogle siddepladser",
       });
@@ -109,18 +140,6 @@ const ChooseOrder = () => {
     }
     setOrder(formData);
     navigate(`/events/${event.item.id}/godkend`);
-  };
-  // function to remove seats from the array
-  const handleRemoveSeat = () => {
-    // remove the last seat from the formData.seats array
-    setFormData((prevFormData) => {
-      const newSeats = [...prevFormData.seats];
-      newSeats.pop();
-      return {
-        ...prevFormData,
-        seats: newSeats,
-      };
-    });
   };
 
   return (
@@ -146,78 +165,82 @@ const ChooseOrder = () => {
                       {event.item.starttime}
                     </p>
                   </div>
-                  {loggedIn ?
-                  <ContactInfoStyled onSubmit={handleSubmit}>
-                     <div>
+                  {loggedIn ? (
+                    <ContactInfoStyled onSubmit={handleSubmit}>
                       <div>
-                        <label htmlFor="firstname">FORNAVN</label>
-                        <input
-                          onChange={handleChange}
-                          type="text"
-                          name="firstname"
-                          value={formData.firstname}
-                          placeholder="Fornavn"
-                          maxLength="80"
-                          required
-                        />
+                        <div>
+                          <label htmlFor="firstname">FORNAVN</label>
+                          <input
+                            onChange={handleChange}
+                            type="text"
+                            name="firstname"
+                            value={formData.firstname}
+                            placeholder="Fornavn"
+                            maxLength="80"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="lastname">EFTERNAVN</label>
+                          <input
+                            onChange={handleChange}
+                            type="text"
+                            name="lastname"
+                            value={formData.lastname}
+                            placeholder="Efternavn"
+                            maxLength="80"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="adress">VEJNAVN & NR</label>
+                          <input
+                            onChange={handleChange}
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            placeholder="Vejnavn & nr"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="zipcode">POSTNR & BY</label>
+                          <input
+                            onChange={handleChange}
+                            type="number"
+                            name="zipcode"
+                            value={formData.zipcode}
+                            placeholder="Postnummer"
+                            required
+                          />
+                          <input
+                            onChange={handleChange}
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            placeholder="By"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="email">EMAIL</label>
+                          <input
+                            onChange={handleChange}
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            placeholder="Emailadresse"
+                            required
+                          />
+                        </div>
+                        {formErrors && <p>{formErrors.message}</p>}
                       </div>
-                      <div>
-                        <label htmlFor="lastname">EFTERNAVN</label>
-                        <input
-                          onChange={handleChange}
-                          type="text"
-                          name="lastname"
-                          value={formData.lastname}
-                          placeholder="Efternavn"
-                          maxLength="80"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="adress">VEJNAVN & NR</label>
-                        <input
-                          onChange={handleChange}
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          placeholder="Vejnavn & nr"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="zipcode">POSTNR & BY</label>
-                        <input
-                          onChange={handleChange}
-                          type="number"
-                          name="zipcode"
-                          value={formData.zipcode}
-                          placeholder="Postnummer"
-                          required
-                        />
-                        <input
-                          onChange={handleChange}
-                          type="text"
-                          name="city"
-                          value={formData.city}
-                          placeholder="By"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email">EMAIL</label>
-                        <input
-                          onChange={handleChange}
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          placeholder="Emailadresse"
-                          required
-                        />
-                      </div>
-                      {formErrors && <p>{formErrors.message}</p>}
-                    </div> 
-                  </ContactInfoStyled>
-                  : (<><h3>Log ind for at fortsætte</h3> <Login /></>)}
+                    </ContactInfoStyled>
+                  ) : (
+                    <>
+                      <h3>Log ind for at fortsætte</h3> <Login />
+                    </>
+                  )}
                   <p>ALLE FELTER SKAL UDFYLDES</p>
                   <div>
                     <p>
@@ -263,6 +286,7 @@ const ChooseOrder = () => {
                                 ? "row-ten"
                                 : ""
                             }`}
+                            data-seat={seat.id}
                             onClick={(event) => handleSeatClick(event, seat.id)}
                           ></span>
                         ) : (

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import appService from "../../Components/App/Appservices/AppService";
 import CTAButton from "../../Components/Partials/CTAButton";
 import useGetByIdApiDataFromEndpoint from "../../Hooks/useGetByIdApiDataFromEndpoint";
@@ -13,22 +13,35 @@ const ConfirmOrder = () => {
   const { state: event } = useGetByIdApiDataFromEndpoint("events", id);
   const { state: seats } = useGetByIdApiDataFromEndpoint("seats", id);
 
-  const { OrderInfo } = useOrderStore();
+  const { OrderInfo, setOrder } = useOrderStore();
   const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
 
   const submitOrder = () => {
     const buy = async () => {
       try {
         await appService.Create("reservations", {
-          OrderInfo,
+          event_id: OrderInfo.event_id,
+          firstname: OrderInfo.firstname,
+          lastname: OrderInfo.lastname,
+          address: OrderInfo.address,
+          zipcode: OrderInfo.zipcode,
+          city: OrderInfo.city,
+          seats: OrderInfo.seats,
         });
       } catch (error) {
         console.error(error);
       }
-      navigate("/tak")
+      setOrder({
+        event_id: "",
+        firstname: "",
+        lastname: "",
+        address: "",
+        zipcode: "",
+        city: "",
+        email: "",
+        seats: [],
+      });
+      navigate("/tak");
     };
     buy();
   };
@@ -120,13 +133,15 @@ const ConfirmOrder = () => {
           <p>Indlæser</p>
         )}
         <div>
-          <div onClick={goBack}>
-            <CTAButton
-              width="1rem"
-              bgColor={(props) => props.theme.colors.secondary}
-              btnText="TILBAGE"
-            />
-          </div>
+          
+            <Link to={`/events/${id}/bestil`}> 
+              <CTAButton
+                width="1rem"
+                bgColor={(props) => props.theme.colors.secondary}
+                btnText="TILBAGE"
+              />
+            </Link>
+          
           <div onClick={submitOrder}>
             <CTAButton
               width="1rem"

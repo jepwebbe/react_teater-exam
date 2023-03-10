@@ -235,11 +235,10 @@ const BookingDetails = ({ bookingId, price }) => {
     "reservations",
     bookingId,
   );
-
   return (
     <>
-      <td>{bookingDetails.item && bookingDetails?.reservation.reservationlines.length}</td>
-      <td>{bookingDetails.item && bookingDetails?.reservation.reservationlines.length * price}.00</td>
+      <td>{bookingDetails.reservation && bookingDetails.reservation.reservationlines.length}</td>
+      <td>{bookingDetails.reservation && bookingDetails.reservation.reservationlines.length * price}.00</td>
     </>
   );
 };

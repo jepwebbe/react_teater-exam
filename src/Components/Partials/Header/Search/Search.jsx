@@ -16,18 +16,17 @@ const Search = () => {
 
   // a simple fetch that takes the searchterm and fetches it
   // and navigates to result page
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        `https://api.mediehuset.net/detutroligeteater/events/search/${searchTerm}`
-      );
-      const results = await response.json();
-      setSearchResults(results.items);
-    } catch (error) {
-      console.error(error);
-    }
-    navigate("/resultat")
+    fetch(`https://api.mediehuset.net/detutroligeteater/events/search/${searchTerm}`)
+      .then((response) => response.json())
+      .then((results) => {
+        setSearchResults(results.items);
+        navigate("/resultat");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

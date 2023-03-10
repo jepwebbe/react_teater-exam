@@ -3,7 +3,7 @@ import { PageTwo } from "../../Styles/PageTemplate/PageTwo";
 import styled from "styled-components";
 const Thanks = () => {
   return (
-    <PageTwo>
+    <PageTwo title="Tak for din ordre" description="Side der takker for ordre hos Det Utrolige Teater">
       <ThanksStyled>
         <h2>Tak for din bestilling</h2>
       </ThanksStyled>
